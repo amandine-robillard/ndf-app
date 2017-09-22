@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'CARDS_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card *ngFor="let item of cardItems">
+
+    <ion-item>
+      <h2>{{item.user.name}}</h2>
+			<p>En cours</p>
+    </ion-item>
+
+    <ion-card-content>
+			<ion-row>
+				<ion-col>
+					<p>TVA</p>
+					<p>132.02€</p>
+				</ion-col>
+				<ion-col>
+					<p>TTC</p>
+					<p>132.02€</p>
+				</ion-col>
+			</ion-row>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start>
+            <ion-icon name='thumbs-up'></ion-icon>
+            Exporter
+          </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start>
+            <ion-icon name='text'></ion-icon>
+            Supprimer
+          </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

@@ -41,6 +41,7 @@ export class MyApp {
     { title: 'Signup', component: 'SignupPage' },
     { title: 'Map', component: 'MapPage' },
     { title: 'Master Detail', component: 'ListMasterPage' },
+    { title: 'Mes Notes', component: 'ListeNotePage' },
     { title: 'Menu', component: 'MenuPage' },
     { title: 'Settings', component: 'SettingsPage' },
     { title: 'Search', component: 'SearchPage' }

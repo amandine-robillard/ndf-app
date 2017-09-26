@@ -42,6 +42,7 @@ export class MyApp {
     { title: 'Map', component: 'MapPage' },
     { title: 'Master Detail', component: 'ListMasterPage' },
     { title: 'Mes Notes', component: 'ListeNotePage' },
+    { title: 'Note', component: 'NotePage' },
     { title: 'Menu', component: 'MenuPage' },
     { title: 'Settings', component: 'SettingsPage' },
     { title: 'Search', component: 'SearchPage' }

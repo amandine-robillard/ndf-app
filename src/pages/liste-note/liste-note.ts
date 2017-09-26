@@ -15,6 +15,7 @@ export class ListeNotePage {
   constructor(public navCtrl: NavController) {
     this.cardItems = [
       {
+				id: '0',
         user: {
           avatar: 'assets/img/marty-avatar.png',
           name: 'Marty McFly'
@@ -24,6 +25,7 @@ export class ListeNotePage {
         content: 'Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.',
       },
       {
+				id: '1',
         user: {
           avatar: 'assets/img/sarah-avatar.png.jpeg',
           name: 'Sarah Connor'
@@ -33,6 +35,7 @@ export class ListeNotePage {
         content: 'I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human life, maybe we can too.'
       },
       {
+				id: '2',
         user: {
           avatar: 'assets/img/ian-avatar.png',
           name: 'Dr. Ian Malcolm'
@@ -42,6 +45,17 @@ export class ListeNotePage {
         content: 'Your scientists were so preoccupied with whether or not they could, that they didn\'t stop to think if they should.'
       }
     ];
-
   }
+
+	/* Open a cart */
+	openCard(cardId) {
+		// alert('ID : ' + cardId);
+		this.navCtrl.push('NotePage', {
+			id: cardId,
+		},
+		{
+			animate: true,
+			animation: 'ios-transition'
+		});
+	}
 }

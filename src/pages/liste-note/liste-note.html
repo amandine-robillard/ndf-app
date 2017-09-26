@@ -6,10 +6,8 @@
 
 </ion-header>
 
-
 <ion-content>
-
-  <ion-card *ngFor="let item of cardItems">
+  <ion-card *ngFor="let item of cardItems" (click)="openCard(item.id)">
 
     <ion-item>
       <h2>{{item.user.name}}</h2>

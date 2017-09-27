@@ -8,7 +8,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class NotePage {
 	listNote: any[];
-	note: any[];
+	note: Object;
 
   constructor(public navCtrl: NavController, private navParams: NavParams) {
 		this.listNote = [
@@ -46,9 +46,24 @@ export class NotePage {
 				content: 'Your scientists were so preoccupied with whether or not they could, that they didn\'t stop to think if they should.'
 			}
 		];
+		let noteDefault = {
+			user: {
+				avatar: 'assets/img/ian-avatar.png',
+				name: 'Dr. Ian Malcolm'
+			},
+			title: 'Nouvelle note',
+			date: 'June 28, 1990',
+			image: 'assets/img/advance-card-jp.jpg',
+			content: 'Your scientists were so preoccupied with whether or not they could, that they didn\'t stop to think if they should.'
+		}
 
 		let id = navParams.get('id');
-		this.note = this.listNote[id];
+		if ( ! id ) {
+			this.note = noteDefault;
+		} else {
+			this.note = this.listNote[id];
+		}
+
 	}
 
 }

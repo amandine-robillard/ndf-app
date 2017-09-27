@@ -58,4 +58,9 @@ export class ListeNotePage {
 			animation: 'ios-transition'
 		});
 	}
+
+	/* Create a new note */
+	createNote() {
+		this.navCtrl.push('NotePage');
+	}
 }

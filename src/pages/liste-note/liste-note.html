@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'CARDS_TITLE' | translate }}</ion-title>
+    <ion-title>Mes notes</ion-title>
     <ion-buttons end (click)="createNote()">
       <button ion-button>
       	<ion-icon name="add"></ion-icon>
@@ -15,7 +15,7 @@
   <ion-card *ngFor="let item of cardItems" (click)="openCard(item.id)">
 
     <ion-item>
-      <h2>{{item.user.name}}</h2>
+      <h2>{{item.name}}</h2>
 			<p>En cours</p>
     </ion-item>
 

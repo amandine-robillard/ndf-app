@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-// import { Items } from '../mocks/providers/items';
+import { Notes } from '../mocks/providers/notes';
 // import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
@@ -28,7 +28,7 @@ import { MyApp } from './app.component';
   ],
   providers: [
     // Api,
-    // Items,
+    Notes,
     // Camera,
     // GoogleMaps,
     SplashScreen,

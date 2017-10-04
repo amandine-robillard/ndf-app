@@ -8,6 +8,7 @@ export class Notes {
 	notes: Note[] = [];
 
 	defaultNote: any = {
+		"id": "0",
 		"title": "Nouvelle note"
 	};
 

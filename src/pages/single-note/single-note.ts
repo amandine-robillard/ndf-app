@@ -19,8 +19,8 @@ export class SingleNotePage {
 			this.note = this.notes.defaultNote;
 			this.newNote = true;
 		} else {
-			this.note = this.notes.query({ "id": id });
-			this.note = this.note[0];
+			let result = this.notes.query({ "id": id });
+			this.note = result[0];
 		}
   }
 

@@ -1,9 +1,19 @@
-export class Note {
+import { Post } from '../models/post';
+
+export class Note extends Post {
+
+	title: string = "Nouvelle Note";
 
 	constructor(fields: any) {
-		for (const f in fields) {
-			this[f] = fields[f];
-		}
+		super(fields);
+		this.displayId();
+
+		this['title'] = fields['title'];
+	}
+
+	displayId() {
+		super.displayId();
+		console.log('ok');
 	}
 
 }

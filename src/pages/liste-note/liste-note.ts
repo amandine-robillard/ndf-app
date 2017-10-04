@@ -14,6 +14,7 @@ export class ListeNotePage {
 
   constructor(public navCtrl: NavController, public notes: Notes) {
 		this.listeNote = this.notes.query();
+		console.log(this.listeNote);
   }
 
 	/* Open a cart */

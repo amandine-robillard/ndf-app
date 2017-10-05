@@ -2,18 +2,18 @@ import { Post } from '../models/post';
 
 export class Note extends Post {
 
-	title: string = "Nouvelle Note";
+	private interfaceNote = {
+
+	}
 
 	constructor(fields: any) {
 		super(fields);
-		this.displayId();
 
-		this['title'] = fields['title'];
-	}
-
-	displayId() {
-		super.displayId();
-		console.log('ok');
+		for (const f in fields) {
+			if(this.interfaceNote[f]) {
+				this[f] = fields[f];
+			}
+		}
 	}
 
 }

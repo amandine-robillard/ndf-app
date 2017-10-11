@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 import { Note } from '../../models/note';
-import { Notes } from '../../mocks/providers/notes';
+import { Notes } from '../../providers/notes/notes';
+
+import { Entry } from '../../models/entry';
+import { Entries } from '../../mocks/providers/entries';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @IonicPage()
 @Component({
@@ -12,16 +18,26 @@ import { Notes } from '../../mocks/providers/notes';
 export class SingleNotePage {
 	note: Note;
 	newNote: Boolean = false;
+	errorMessage: string = 'En cours de chargement...';
 
-  constructor(public navCtrl: NavController, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+	entries: Entry[];
+
+  constructor(public navCtrl: NavController, public entry: Entries, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
 		let id = navParams.get('id');
 		if ( ! id && id != 0 ) {
 			this.note = this.notes.defaultNote;
 			this.newNote = true;
 		} else {
-			let result = this.notes.query({ "id": id });
-			this.note = result[0];
+			this.notes.get(id).subscribe(data => {
+				this.note = data[0];
+				console.log(data);
+			}, error => {
+				this.errorMessage = "Erreur lors du chargement, veuillez relancer l'application."
+			});
 		}
+
+		this.entries = this.entry.query();
+		console.log(this.entries);
   }
 
 	presentActionSheet() {

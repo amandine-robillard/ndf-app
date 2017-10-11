@@ -1,11 +1,14 @@
 import { Post } from '../models/post';
 
-export class Note extends Post {
+export class Entry extends Post {
 
 	private interfaceNote = {
-		validation_status: String,
+		category_name: String,
+		vehicule: String,
+		distance: Number,
 		tax_inclusive_amount: Number,
 		tax_amount: Number,
+		associated_document_id: Array,
 	}
 
 	constructor(fields: any) {

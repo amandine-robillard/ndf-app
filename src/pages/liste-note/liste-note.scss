@@ -1,3 +1,22 @@
 .page-liste-note {
-	
+	.validation-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		display: inline-block;
+		background: #f8f8f8;
+		margin-right: 5px;
+		&.payee {
+			background: #30fa0d;
+		}
+		&.en-cours {
+			background: #bd47ec;
+		}
+		&.refusee {
+			background: #f42424;
+		}
+		&.en-attente {
+			background: #0696ff;
+		}
+	}
 }

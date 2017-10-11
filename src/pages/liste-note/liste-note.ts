@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Note } from '../../models/note';
-import { Notes } from '../../mocks/providers/notes';
+import { Notes } from '../../providers/notes/notes';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import { Api } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -10,11 +14,15 @@ import { Notes } from '../../mocks/providers/notes';
   templateUrl: 'liste-note.html'
 })
 export class ListeNotePage {
-	listeNote: Note[];
+	listeNote: Observable<any>;
+	errorMessage: string = 'En cours de chargement...';
 
-  constructor(public navCtrl: NavController, public notes: Notes) {
-		this.listeNote = this.notes.query();
-		console.log(this.listeNote);
+  constructor(public navCtrl: NavController, public notes: Notes, public api: Api) {
+		this.notes.get().subscribe(data => {
+			this.listeNote = data;
+		}, error => {
+			this.errorMessage = "Erreur lors du chargement, veuillez relancer l'application."
+		});
   }
 
 	/* Open a cart */
@@ -27,6 +35,12 @@ export class ListeNotePage {
 	/* Create a new note */
 	createNote() {
 		this.navCtrl.push('SingleNotePage');
+	}
+
+	deleteNote(item: Note) {
+		if (item) {
+			this.notes.delete( item );
+		}
 	}
 
 }

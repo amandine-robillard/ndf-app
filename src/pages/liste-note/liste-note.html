@@ -1,34 +1,36 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Mes notes</ion-title>
-    <ion-buttons end (click)="createNote()">
-      <button ion-button>
-      	<ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>Mes notes</ion-title>
+		<ion-buttons end (click)="createNote()">
+			<button ion-button>
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
 
 </ion-header>
 
-<ion-content>
-
+<ion-content class="page-liste-note">
   <ion-card *ngFor="let note of listeNote" (click)="openNote(note.id)">
 
     <ion-item>
-      <h2>{{note.title}}</h2>
-			<p>En cours</p>
+      <h2>{{ note.title }}</h2>
+			<p>
+				<span class="validation-dot {{ note.validation_status }}"></span>
+				{{ note.validation_status }}
+			</p>
     </ion-item>
 
     <ion-card-content>
 			<ion-row>
 				<ion-col>
 					<p>TVA</p>
-					<p>132.02€</p>
+					<p>{{ note.tax_amount }}€</p>
 				</ion-col>
 				<ion-col>
 					<p>TTC</p>
-					<p>132.02€</p>
+					<p>{{ note.tax_inclusive_amount }}€</p>
 				</ion-col>
 			</ion-row>
     </ion-card-content>
@@ -36,22 +38,19 @@
     <ion-row>
       <ion-col>
         <button ion-button color="primary" clear small icon-start>
-          <ion-icon name='thumbs-up'></ion-icon>
-          Exporter
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button color="primary" clear small icon-start>
           <ion-icon name='text'></ion-icon>
-          Supprimer
+          <span (click)="deleteNote(note)">Supprimer</span>
         </button>
       </ion-col>
-      <ion-col center text-center>
+      <ion-col text-center>
         <ion-note>
-          11h ago
+          {{ note.date_modified.date_human_readable }}
         </ion-note>
       </ion-col>
     </ion-row>
 
   </ion-card>
+	<div class="async-message" *ngIf="listeNote == undefined">
+		{{errorMessage}}
+	</div>
 </ion-content>

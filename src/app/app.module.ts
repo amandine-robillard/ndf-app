@@ -8,8 +8,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { Notes } from '../mocks/providers/notes';
-// import { Api } from '../providers/providers';
+import { Notes } from '../providers/notes/notes';
+import { Entries } from '../mocks/providers/entries';
+import { Api } from '../providers/api/api';
 import { MyApp } from './app.component';
 
 @NgModule({
@@ -27,8 +28,9 @@ import { MyApp } from './app.component';
     MyApp
   ],
   providers: [
-    // Api,
+    Api,
     Notes,
+		Entries,
     // Camera,
     // GoogleMaps,
     SplashScreen,

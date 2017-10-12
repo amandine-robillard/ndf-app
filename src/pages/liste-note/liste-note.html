@@ -2,7 +2,7 @@
 
 	<ion-navbar>
 		<ion-title>Mes notes</ion-title>
-		<ion-buttons end (click)="slidePage()">
+		<ion-buttons end (click)="createNote()">
 			<button ion-button>
 				<ion-icon name="add"></ion-icon>
 			</button>
@@ -17,7 +17,7 @@
     <ion-item>
       <h2>{{ note.title }}</h2>
 			<p>
-				<span class="validation-dot {{ note.validation_status }}"></span>
+				<span class="validation-dot {{ note.validation_status | sanitizeString }}"></span>
 				{{ note.validation_status }}
 			</p>
     </ion-item>

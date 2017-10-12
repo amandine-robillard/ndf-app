@@ -16,14 +16,16 @@ import { MyApp } from './app.component';
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
+	exports: [
+	],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp

@@ -12,7 +12,7 @@ import { Api } from '../../providers/api/api';
 @IonicPage()
 @Component({
   selector: 'page-liste-note',
-  templateUrl: 'liste-note.html'
+  templateUrl: 'liste-note.html',
 })
 export class ListeNotePage {
 	listeNote: Observable<any>;
@@ -25,6 +25,7 @@ export class ListeNotePage {
 		this.notes.get().subscribe(
 			data => {
 				this.listeNote = data;
+				console.log(this.listeNote);
 				this.loading.dismiss();
 			},
 			error => {
@@ -43,37 +44,15 @@ export class ListeNotePage {
 		this.loading.present();
 	}
 
-	slidePage() {
-		let options: NativeTransitionOptions = {
-			direction: 'up',
-	    duration: 500,
-	    slowdownfactor: 3,
-	    slidePixels: 20,
-	    iosdelay: 100,
-	    androiddelay: 150,
-	    fixedPixelsTop: 0,
-	    fixedPixelsBottom: 60
-		};
-
-		this.nativePageTransitions.slide(options)
-		.then( ()=>{ console.log('ok'); } )
-		.catch( ()=>{ console.log('non'); } );
-		this.navCtrl.setRoot('SingleNotePage');
-	}
-
-
 	/* Open a cart */
 	openNote(noteId) {
-		// let options: NativeTransitionOptions = {
-		// 	direction: 'left',
-		// 	duration: 400,
-		// 	slowdownfactor: -1,
-		// 	iosdelay: 50
-		// };
-		// this.nativePageTransitions.slide(options)
-		// .then(()=>{ console.log('success'); })
-		// .catch(()=>{ console.log('error'); });
-
+		let options: NativeTransitionOptions = {
+			direction: 'left',
+			duration: 400,
+			slowdownfactor: -1,
+			iosdelay: 50
+		};
+		this.nativePageTransitions.slide(options);
 		this.navCtrl.push('SingleNotePage', {
 			id: noteId,
 		});

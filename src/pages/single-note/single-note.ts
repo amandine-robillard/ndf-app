@@ -24,15 +24,14 @@ export class SingleNotePage {
 	entries: Entry[];
 
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public entry: Entries, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
-		this.presentLoadingDefault();
 
 		let id = navParams.get('id');
 		if ( ! id && id != 0 ) {
 			this.note = this.notes.defaultNote;
 			this.newNote = true;
-			this.loading.dismiss();
 		}
 		else {
+			this.presentLoadingDefault();
 			this.notes.get(id).subscribe(
 				data => {
 					this.note = data;
@@ -63,12 +62,6 @@ export class SingleNotePage {
 			title: 'Options avancées',
 			buttons: [
 				{
-					text: 'Editer',
-					handler: () => {
-						console.log('Edited clicked');
-					}
-				},
-				{
 					text: 'Exporter',
 					handler: () => {
 						console.log('Archive clicked');
@@ -79,6 +72,13 @@ export class SingleNotePage {
 					role: 'destructive',
 					handler: () => {
 						console.log('Destructive clicked');
+					}
+				},
+				{
+					text: 'Supprimer',
+					role: 'destructive',
+					handler: () => {
+						console.log('Supprimer clicked');
 					}
 				},
 				{

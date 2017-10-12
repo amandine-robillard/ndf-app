@@ -8,7 +8,7 @@ import { Http, RequestOptions, URLSearchParams } from '@angular/http';
  */
 @Injectable()
 export class Api {
-  url: string = 'https://shop.eoxia.com/wp-json/note_de_frais/v1';
+  url: string = 'http://localhost/beflex/wp-json/note_de_frais/v1';
 
   constructor(public http: Http) {
   }

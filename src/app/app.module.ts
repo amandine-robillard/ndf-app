@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
 import { Notes } from '../providers/notes/notes';
 import { Entries } from '../mocks/providers/entries';
@@ -35,6 +36,7 @@ import { MyApp } from './app.component';
     // GoogleMaps,
     SplashScreen,
     StatusBar,
+		NativePageTransitions,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

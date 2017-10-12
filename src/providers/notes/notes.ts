@@ -8,7 +8,7 @@ import { Api } from '../../providers/api/api';
 @Injectable()
 export class Notes {
 	notes: Note[] = [];
-	noteUrl: string = 'note-de-frais';
+	noteUrl: string = 'note';
 
 	defaultNote: any = {
 		"id": "0",
@@ -19,11 +19,11 @@ export class Notes {
 	}
 
 	get(param?: number) {
+		let queryUrl = this.noteUrl;
 		if(param) {
-			this.noteUrl += '/' + param;
+			queryUrl = this.noteUrl + '/' + param;
 		}
-		console.log(this.noteUrl);
-		return this.api.get(this.noteUrl).map(res => res.json());
+		return this.api.get(queryUrl).map(res => res.json());
 	}
 
 	add(item: Note) {

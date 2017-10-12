@@ -23,11 +23,13 @@
         "@ionic-native/camera": "3.12.1",
         "@ionic-native/core": "3.12.1",
         "@ionic-native/google-maps": "3.12.1",
+        "@ionic-native/native-page-transitions": "^4.3.1",
         "@ionic-native/splash-screen": "3.12.1",
         "@ionic-native/status-bar": "3.12.1",
         "@ionic/storage": "2.0.1",
         "@ngx-translate/core": "6.0.1",
         "@ngx-translate/http-loader": "0.0.3",
+        "com.telerik.plugins.nativepagetransitions": "^0.6.5",
         "cordova-android": "^6.2.3",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-splashscreen": "^4.0.3",
@@ -51,7 +53,8 @@
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
-            "ionic-plugin-keyboard": {}
+            "ionic-plugin-keyboard": {},
+            "com.telerik.plugins.nativepagetransitions": {}
         },
         "platforms": [
             "android"

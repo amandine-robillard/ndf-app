@@ -10,7 +10,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
 import { Notes } from '../providers/notes/notes';
-import { Entries } from '../mocks/providers/entries';
+import { Lignes } from '../providers/lignes/lignes';
 import { Api } from '../providers/api/api';
 import { MyApp } from './app.component';
 
@@ -33,7 +33,7 @@ import { MyApp } from './app.component';
   providers: [
     Api,
     Notes,
-		Entries,
+		Lignes,
     // Camera,
     // GoogleMaps,
     SplashScreen,

@@ -1,6 +1,6 @@
 import { Post } from '../models/post';
 
-export class Entry extends Post {
+export class Ligne extends Post {
 
 	private interfaceNote = {
 		category_name: String,

@@ -17,25 +17,26 @@
 </ion-header>
 
 <ion-content>
+	{{validation_status}}
 
 	<ion-list inset>
 		<ion-item>
 			<ion-label>Status</ion-label>
-			<ion-select [(ngModel)]="validation_status">
-				<ion-option value="en-cours">En cours</ion-option>
-				<ion-option value="validee">Validée</ion-option>
-				<ion-option value="payee">Payée</ion-option>
-				<ion-option value="refusee">Refusée</ion-option>
+			<ion-select [ngModel]="note?.validation_status" (ngModelChange)="updateValidationStatus($event)">
+				<ion-option value="En cours">En cours</ion-option>
+				<ion-option value="Validée">Validée</ion-option>
+				<ion-option value="Payée">Payée</ion-option>
+				<ion-option value="Refusée">Refusée</ion-option>
 			</ion-select>
 		</ion-item>
 	</ion-list>
 	<ion-list>
-		<ion-item *ngFor="let entry of entries">
+		<ion-item *ngFor="let ligne of note?.children" (click)="openLigne(ligne.id)">
 			<ion-thumbnail item-start>
 				<!-- <img src="img/thumbnail-totoro.png"> -->
 			</ion-thumbnail>
-			<h2>{{ entry.title }}</h2>
-			<p>24€TTC 14€TVA</p>
+			<h2>{{ ligne.title }}</h2>
+			<p>{{ligne.tax_inclusive_amount}}€<sup>TTC</sup>  {{ligne.tax_amount}}€<sup>TVA</sup></p>
 			<button ion-button clear item-end>View</button>
 		</ion-item>
 

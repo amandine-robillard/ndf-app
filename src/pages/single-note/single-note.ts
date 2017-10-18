@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
+import { ModalController, IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import { Note } from '../../models/note';
 import { Notes } from '../../providers/notes/notes';
 
-import { Entry } from '../../models/entry';
-import { Entries } from '../../mocks/providers/entries';
+import { Ligne } from '../../models/ligne';
+import { Lignes } from '../../providers/lignes/lignes';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+
 @IonicPage()
 @Component({
   selector: 'page-single-note',
-  templateUrl: 'single-note.html'
+  templateUrl: 'single-note.html',
 })
 export class SingleNotePage {
 	note: Note;
@@ -21,20 +22,23 @@ export class SingleNotePage {
 	errorMessage: string = 'En cours de chargement...';
 	loading: any;
 
-	entries: Entry[];
+	listeLigne: Observable<any>;
 
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public entry: Entries, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor(private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligne: Lignes, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
 
 		let id = navParams.get('id');
 		if ( ! id && id != 0 ) {
-			this.note = this.notes.defaultNote;
-			this.newNote = true;
+			// ICI, création d'une note, puis GET de la note
+			// this.note = this.notes.defaultNote;
+			// this.newNote = true;
+			this.navCtrl.push('HomePage');
 		}
 		else {
 			this.presentLoadingDefault();
 			this.notes.get(id).subscribe(
 				data => {
 					this.note = data;
+					console.log(data);
 					this.loading.dismiss();
 				},
 				error => {
@@ -44,8 +48,8 @@ export class SingleNotePage {
 			);
 		}
 
-		this.entries = this.entry.query();
-		console.log(this.entries);
+		// this.lignes = this.ligne.get();
+		// console.log(this.lignes);
   }
 
 	presentLoadingDefault() {
@@ -90,6 +94,15 @@ export class SingleNotePage {
 			]
 		});
 		actionSheet.present();
+	}
+
+	openLigne(ligneId) {
+		let newModal = this.modalCtrl.create('SingleLignePage', { id: ligneId });
+		newModal.present();
+	}
+
+	public updateValidationStatus(value: string) {
+		console.log(value);
 	}
 
 }

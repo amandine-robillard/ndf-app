@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+		<ion-buttons left>
+			<button ion-button (click)="cancelEdit()">Annuler</button>
+		</ion-buttons>
+
+		<ion-title>Titre</ion-title>
+
+		<ion-buttons end>
+			<button ion-button (click)="saveEdit()">Enregistrer</button>
+		</ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+	{{ligne?.title}}
+
+	<ion-list>
+		<ion-item>
+			<ion-label>Date</ion-label>
+			<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="ligne?.date.date_input.date"></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label color="primary" stacked>Libellé</ion-label>
+			<ion-input type="text" value="{{ligne?.title}}"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="primary" stacked>Type de note</ion-label>
+			<ion-input type="text" value="{{ligne?.title}}"></ion-input>
+		</ion-item>
+	</ion-list>
+</ion-content>

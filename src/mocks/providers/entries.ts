@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { Entry } from '../../models/entry';
+import { Ligne } from '../../models/ligne';
 
 @Injectable()
 export class Entries {
-	entries: Entry[] = [];
+	entries: Ligne[] = [];
 
 	constructor(public http: Http) {
 		let entries = [
@@ -24,7 +24,7 @@ export class Entries {
 		];
 
 		for (let item of entries) {
-			this.entries.push(new Entry(item));
+			this.entries.push(new Ligne(item));
 		}
 	}
 
@@ -46,11 +46,11 @@ export class Entries {
 		});
 	}
 
-	add(item: Entry) {
+	add(item: Ligne) {
 		this.entries.push(item);
 	}
 
-	delete(item: Entry) {
+	delete(item: Ligne) {
 		this.entries.splice(this.entries.indexOf(item), 1);
 	}
 }

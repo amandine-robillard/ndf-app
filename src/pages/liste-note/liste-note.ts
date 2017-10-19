@@ -15,16 +15,18 @@ import { Api } from '../../providers/api/api';
   templateUrl: 'liste-note.html',
 })
 export class ListeNotePage {
-	listeNote: Observable<any>;
+	listeNote: Note[] = [];
 	errorMessage: string = 'En cours de chargement...';
 	loading: any;
 
-  constructor(private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public notes: Notes, public api: Api) {
+  constructor(private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
 		this.presentLoadingDefault();
 
-		this.notes.get().subscribe(
+		this.noteApi.get().subscribe(
 			data => {
-				this.listeNote = data;
+				for (let item of data) {
+					this.listeNote.push(new Note(item));
+				}
 				this.loading.dismiss();
 			},
 			error => {
@@ -64,7 +66,7 @@ export class ListeNotePage {
 
 	deleteNote(item: Note) {
 		if (item) {
-			this.notes.delete( item );
+			this.noteApi.delete( item );
 		}
 	}
 

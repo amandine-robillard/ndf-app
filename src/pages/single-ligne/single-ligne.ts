@@ -16,15 +16,14 @@ import 'rxjs/add/operator/map';
 })
 export class SingleLignePage {
 	ligneId: any;
-	ligne: Observable<any>;
+	ligne: Ligne;
 
   constructor(public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
 		this.ligneId = this.navParams.get('id');
 		this.ligneApi.get(this.ligneId)
 		.subscribe(
 			data => {
-				this.ligne = data;
-				console.log(data);
+				this.ligne = new Ligne(data);
 			}
 		);
 	}

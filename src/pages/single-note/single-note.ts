@@ -37,8 +37,7 @@ export class SingleNotePage {
 			this.presentLoadingDefault();
 			this.notes.get(id).subscribe(
 				data => {
-					this.note = data;
-					console.log(data);
+					this.note = new Note(data);
 					this.loading.dismiss();
 				},
 				error => {

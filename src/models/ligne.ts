@@ -9,6 +9,7 @@ export class Ligne extends Post {
 		tax_inclusive_amount: Number,
 		tax_amount: Number,
 		associated_document_id: Array,
+		taxonomy: Array
 	}
 
 	constructor(fields: any) {

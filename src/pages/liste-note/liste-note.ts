@@ -25,7 +25,6 @@ export class ListeNotePage {
 		this.notes.get().subscribe(
 			data => {
 				this.listeNote = data;
-				console.log(this.listeNote);
 				this.loading.dismiss();
 			},
 			error => {

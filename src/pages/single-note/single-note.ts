@@ -24,18 +24,18 @@ export class SingleNotePage {
 
 	listeLigne: Observable<any>;
 
-  constructor(private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligne: Lignes, public notes: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor(private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligne: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
 
 		let id = navParams.get('id');
 		if ( ! id && id != 0 ) {
 			// ICI, création d'une note, puis GET de la note
-			// this.note = this.notes.defaultNote;
+			// this.note = this.noteApi.defaultNote;
 			// this.newNote = true;
 			this.navCtrl.push('HomePage');
 		}
 		else {
 			this.presentLoadingDefault();
-			this.notes.get(id).subscribe(
+			this.noteApi.get(id).subscribe(
 				data => {
 					this.note = new Note(data);
 					this.loading.dismiss();

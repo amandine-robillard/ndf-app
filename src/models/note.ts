@@ -17,11 +17,7 @@ export class Note extends Post {
 			if(this.interfaceNote[f]) {
 
 				if ( f == 'children' ) {
-					let children = [];
-					for ( let item of fields['children'] ) {
-						children.push(new Ligne(item));
-					}
-					this[f] = children;
+					this[f] = this.setArray(fields['children']);
 				}
 				else {
 					this[f] = fields[f];
@@ -29,6 +25,14 @@ export class Note extends Post {
 
 			}
 		}
+	}
+
+	setArray(fields: Array<any>) {
+		let children = [];
+		for ( let item of fields ) {
+			children.push(new Ligne(item));
+		}
+		return children;
 	}
 
 }

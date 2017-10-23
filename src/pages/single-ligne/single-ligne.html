@@ -5,26 +5,25 @@
 			<button ion-button (click)="cancelEdit()">Annuler</button>
 		</ion-buttons>
 
-		<ion-title>Titre</ion-title>
+		<ion-title>{{ligne?.title}}</ion-title>
 
 		<ion-buttons end>
-			<button ion-button (click)="saveEdit()">Enregistrer</button>
+			<button ion-button (click)="saveEdit(editLigne)">Enregistrer</button>
 		</ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
-	{{ligne?.title}}
 
-	<ion-list>
+	<form [formGroup]="editLigne">
 		<ion-item>
 			<ion-label>Date</ion-label>
-			<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="ligne?.date.date_input.date"></ion-datetime>
+			<!-- <ion-datetime displayFormat="DD/MM/YYYY" formControlName"ligne?.date.date_input.date"></ion-datetime> -->
 		</ion-item>
 		<ion-item>
-			<ion-label stacked>Libellé</ion-label>
-			<ion-input type="text" value="{{ligne?.title}}"></ion-input>
+			<ion-label>Libellé</ion-label>
+			<ion-input type="text" formControlName="title"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Type de note</ion-label>
@@ -33,5 +32,18 @@
 				<ion-option value="Validée">Autre dépense</ion-option>
 			</ion-select>
 		</ion-item>
-	</ion-list>
+		<ion-item>
+			<ion-label>Km</ion-label>
+			<ion-input type="number" disabled formControlName="distance"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>TTC (€)</ion-label>
+			<ion-input type="number" formControlName="tax_inclusive_amount"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>TVA Récup. (€)</ion-label>
+			<ion-input type="number" formControlName="tax_amount"></ion-input>
+		</ion-item>
+	</form>
+
 </ion-content>

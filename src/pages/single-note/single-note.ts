@@ -95,8 +95,12 @@ export class SingleNotePage {
 		actionSheet.present();
 	}
 
-	openLigne(ligneId) {
-		let newModal = this.modalCtrl.create('SingleLignePage', { id: ligneId });
+	openLigne(ligneData) {
+		console.log(ligneData);
+		let newModal = this.modalCtrl.create('SingleLignePage', { ligneData: ligneData });
+		newModal.onDidDismiss(data => {
+      console.log(data);
+    });
 		newModal.present();
 	}
 

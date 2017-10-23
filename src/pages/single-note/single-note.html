@@ -31,7 +31,7 @@
 		</ion-item>
 	</ion-list>
 	<ion-list>
-		<ion-item *ngFor="let ligne of note?.children" (click)="openLigne(ligne.id)">
+		<ion-item *ngFor="let ligne of note?.children" (click)="openLigne(ligne)">
 			<ion-thumbnail item-start>
 				<!-- <img src="img/thumbnail-totoro.png"> -->
 			</ion-thumbnail>

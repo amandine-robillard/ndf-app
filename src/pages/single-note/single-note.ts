@@ -28,9 +28,6 @@ export class SingleNotePage {
 
 		let id = navParams.get('id');
 		if ( ! id && id != 0 ) {
-			// ICI, création d'une note, puis GET de la note
-			// this.note = this.noteApi.defaultNote;
-			// this.newNote = true;
 			this.navCtrl.push('HomePage');
 		}
 		else {

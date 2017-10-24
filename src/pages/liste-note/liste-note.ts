@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, LoadingController } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, LoadingController, AlertController  } from 'ionic-angular';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
 import { Note } from '../../models/note';
@@ -19,22 +19,13 @@ export class ListeNotePage {
 	errorMessage: string = 'En cours de chargement...';
 	loading: any;
 
-  constructor(private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
-		this.presentLoadingDefault();
-
-		this.noteApi.get().subscribe(
-			data => {
-				for (let item of data) {
-					this.listeNote.push(new Note(item));
-				}
-				this.loading.dismiss();
-			},
-			error => {
-				this.errorMessage = "Erreur lors du chargement, veuillez relancer l'application."
-				this.loading.dismiss();
-			}
-		);
+  constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
   }
+
+	/* charge les notes dés que la page devient active */
+	ionViewWillEnter() {
+		this.loadNote();
+	}
 
 	presentLoadingDefault() {
 		this.loading = this.loadingCtrl.create({
@@ -61,7 +52,41 @@ export class ListeNotePage {
 
 	/* Create a new note */
 	createNote() {
-		this.navCtrl.push('SingleNotePage');
+		this.presentLoadingDefault();
+
+		this.noteApi.post({'title': 'Nouvelle note'}).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.openNote(data.id);
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
+	}
+
+	/* Load the list of all notes */
+	loadNote() {
+		this.presentLoadingDefault();
+		this.noteApi.get().subscribe(
+			data => {
+				this.listeNote = [];
+				for (let item of data) {
+					this.listeNote.push(new Note(item));
+				}
+				this.loading.dismiss();
+			},
+			error => {
+				this.errorMessage = "Erreur lors du chargement, veuillez relancer l'application."
+				this.loading.dismiss();
+			}
+		);
 	}
 
 	deleteNote(item: Note) {

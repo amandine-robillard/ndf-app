@@ -12,7 +12,8 @@
 </ion-header>
 
 <ion-content class="page-liste-note">
-  <ion-card *ngFor="let note of listeNote" (click)="openNote(note.id)">
+
+  <ion-card id="{{note.id}}" *ngFor="let note of listeNote" (click)="openNote(note.id)">
 
     <ion-item>
       <h2>{{ note.title }}</h2>

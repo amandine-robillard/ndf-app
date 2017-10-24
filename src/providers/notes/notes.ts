@@ -26,6 +26,13 @@ export class Notes {
 		return this.api.get(queryUrl).map(res => res.json());
 	}
 
+	post(param?: object) {
+		if (!param) {
+			param = {};
+		}
+		return this.api.post(this.noteUrl, param).map(res => res.json());
+	}
+
 	add(item: Note) {
 		this.notes.push(item);
 	}

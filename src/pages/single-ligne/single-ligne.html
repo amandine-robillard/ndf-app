@@ -27,9 +27,8 @@
 		</ion-item>
 		<ion-item>
 			<ion-label>Type de note</ion-label>
-			<ion-select>
-				<ion-option value="En cours">Autoroute parking</ion-option>
-				<ion-option value="Validée">Autre dépense</ion-option>
+			<ion-select formControlName="type_note_id">
+				<ion-option *ngFor="let type of type_note" value="{{type.id}}">{{type.name}}</ion-option>
 			</ion-select>
 		</ion-item>
 		<ion-item>

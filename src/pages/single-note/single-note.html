@@ -30,6 +30,9 @@
 			</ion-select>
 		</ion-item>
 	</ion-list>
+
+	<button ion-button float right (click)="addLigne()"> <ion-icon name="add"></ion-icon> Ajouter une ligne</button>
+
 	<ion-list>
 		<ion-item *ngFor="let ligne of note?.children" (click)="openLigne(ligne)">
 			<ion-thumbnail item-start>

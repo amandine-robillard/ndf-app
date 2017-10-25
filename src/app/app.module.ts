@@ -11,6 +11,7 @@ import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
 import { Notes } from '../providers/notes/notes';
 import { Lignes } from '../providers/lignes/lignes';
+import { Type_Notes } from '../providers/type-note/type-note';
 import { Api } from '../providers/api/api';
 import { MyApp } from './app.component';
 
@@ -34,6 +35,7 @@ import { MyApp } from './app.component';
     Api,
     Notes,
 		Lignes,
+		Type_Notes,
     // Camera,
     // GoogleMaps,
     SplashScreen,

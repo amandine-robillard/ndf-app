@@ -25,8 +25,11 @@ export class SingleNotePage {
 	listeLigne: Observable<any>;
 
   constructor(private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligne: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+		let id = this.navParams.get('id');
+		this.loadNote(id);
+  }
 
-		let id = navParams.get('id');
+	loadNote(id) {
 		if ( ! id && id != 0 ) {
 			this.navCtrl.push('HomePage');
 		}
@@ -43,10 +46,7 @@ export class SingleNotePage {
 				}
 			);
 		}
-
-		// this.lignes = this.ligne.get();
-		// console.log(this.lignes);
-  }
+	}
 
 	presentLoadingDefault() {
 		this.loading = this.loadingCtrl.create({
@@ -93,16 +93,21 @@ export class SingleNotePage {
 	}
 
 	openLigne(ligneData) {
-		console.log(ligneData);
 		let newModal = this.modalCtrl.create('SingleLignePage', { ligneData: ligneData });
 		newModal.onDidDismiss(data => {
+			// Ici, enregistrer les données de la ligne
       console.log(data);
     });
 		newModal.present();
 	}
 
+	/* Ajout d'une ligne */
+	addLigne() {
+
+	}
+
+	/* Modifie le status d'une note */
 	public updateValidationStatus(value: string) {
 		console.log(value);
 	}
-
 }

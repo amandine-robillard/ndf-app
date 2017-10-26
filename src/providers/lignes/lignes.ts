@@ -23,6 +23,13 @@ export class Lignes {
 		return this.api.get(queryUrl).map(res => res.json());
 	}
 
+	post(param?: object) {
+		if (!param) {
+			param = {};
+		}
+		return this.api.post(this.ligneUrl, param).map(res => res.json());
+	}
+
 	add(item: Ligne) {
 		this.lignes.push(item);
 	}

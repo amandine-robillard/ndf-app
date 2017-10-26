@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AlertController, LoadingController, IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { SingleNotePage } from '../single-note/single-note';
 
@@ -22,22 +22,32 @@ export class SingleLignePage {
 	ligneId: any;
 	ligne: Ligne;
 	type_note: Type_Note[] = [];
+	loading: any;
 
 	editLigne: any;
 
-  constructor(public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
 		this.ligne = this.navParams.get('ligneData');
 		this.getAllTypeNote();
 
+		let noteTaxId = ( this.ligne['taxonomy']['_type_note'][0] ) ? this.ligne['taxonomy']['_type_note'][0]['term_taxonomy_id'] : '';
 		this.editLigne = this.formBuilder.group({
 			title: [this.ligne['title'], Validators.required],
 			distance: [this.ligne['distance']],
 			tax_inclusive_amount: [this.ligne['tax_inclusive_amount']],
 			tax_amount: [this.ligne['tax_amount']],
-			type_note_id: [this.ligne['taxonomy']['_type_note'][0]['term_taxonomy_id']]
+			type_note_id: [noteTaxId]
 		});
 
+	}
 
+	presentLoadingDefault() {
+		this.loading = this.loadingCtrl.create({
+			spinner: 'crescent',
+			content: 'Please wait...'
+		});
+
+		this.loading.present();
 	}
 
 	getAllTypeNote() {
@@ -56,7 +66,24 @@ export class SingleLignePage {
 	}
 
 	saveEdit(form) {
+		this.presentLoadingDefault();
+
 		let result = Object.assign(this.ligne, form.value); // On envoie les resultats sur l'objet initial
-		this.viewCtrl.dismiss(result);
+		this.ligneApi.post(result).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.viewCtrl.dismiss(result);
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
+
 	}
 }

@@ -74,6 +74,7 @@ export class ListeNotePage {
 	/* Load the list of all notes */
 	loadNote() {
 		this.presentLoadingDefault();
+
 		this.noteApi.get().subscribe(
 			data => {
 				this.listeNote = [];

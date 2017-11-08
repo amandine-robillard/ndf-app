@@ -24,7 +24,7 @@ export class SingleNotePage {
 
 	listeLigne: Observable<any>;
 
-  constructor(public alertCtrl: AlertController, private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligneApi: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor( public alertCtrl: AlertController, private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligneApi: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
 		this.noteId = this.navParams.get('id');
 		this.loadNote(this.noteId);
   }
@@ -109,7 +109,28 @@ export class SingleNotePage {
 			data => {
 				this.loading.dismiss();
 				this.loadNote(this.noteId);
-				// this.openNote(data.id);
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
+	}
+
+	/* Supression d'une ligne */
+	deleteLigne(ligne) {
+		if ( ! ligne || ligne.length == 0 ) return;
+
+		this.presentLoadingDefault();
+		this.ligneApi.delete(ligne.id).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.loadNote(this.noteId);
 			},
 			error => {
 				this.loading.dismiss();
@@ -144,5 +165,28 @@ export class SingleNotePage {
 				alert.present();
 			}
 		);
+	}
+
+	public ligneOptions(ligne) {
+		if ( ! ligne || ligne.length == 0 ) return;
+		console.log(ligne);
+
+		let actionSheet = this.actionSheetCtrl.create({
+			title: ligne.title,
+			buttons: [
+				{
+					text: 'Supprimer',
+					role: 'destructive',
+					handler: () => {
+						this.deleteLigne(ligne);
+					}
+				},
+				{
+					text: 'Annuler',
+					handler: () => {},
+				}
+			]
+		});
+		actionSheet.present();
 	}
 }

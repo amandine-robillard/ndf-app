@@ -29,13 +29,14 @@
 	<button ion-button float right (click)="addLigne()"> <ion-icon name="add"></ion-icon> Ajouter une ligne</button>
 
 	<ion-list>
-		<ion-item *ngFor="let ligne of note?.children" (click)="openLigne(ligne)">
+		<ion-item *ngFor="let ligne of note?.children">
 			<ion-thumbnail item-start>
 				<!-- <img src="img/thumbnail-totoro.png"> -->
 			</ion-thumbnail>
 			<h2>{{ ligne.title }}</h2>
 			<p>{{ligne.tax_inclusive_amount}}€<sup>TTC</sup>  {{ligne.tax_amount}}€<sup>TVA</sup></p>
-			<button ion-button clear item-end>View</button>
+			<button ion-button clear item-end (click)="openLigne(ligne)">Voir</button>
+			<button ion-button clear item-end (click)="ligneOptions(ligne)"><ion-icon name="more"></ion-icon></button>
 		</ion-item>
 	</ion-list>
 

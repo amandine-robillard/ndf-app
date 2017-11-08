@@ -34,7 +34,11 @@ export class Lignes {
 		this.lignes.push(item);
 	}
 
-	delete(item: Ligne) {
-		this.lignes.splice(this.lignes.indexOf(item), 1);
+	delete(itemId: number) {
+		let param = {
+			'id': itemId,
+			'status': 'trash',
+		}
+		return this.api.post(this.ligneUrl, param).map(res => res.json());
 	}
 }

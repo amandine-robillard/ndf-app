@@ -16,8 +16,10 @@ import { Api } from '../../providers/api/api';
 })
 export class ListeNotePage {
 	listeNote: Note[] = [];
+	listeNoteArchive: Note[] = [];
 	errorMessage: string = 'En cours de chargement...';
 	loading: any;
+	homeFilter: string = "all";
 
   constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
   }
@@ -78,10 +80,14 @@ export class ListeNotePage {
 		this.noteApi.get().subscribe(
 			data => {
 				this.listeNote = [];
+				this.listeNoteArchive = [];
 				for (let item of data) {
 					/* Affiche seulement les notes non archivées */
 					if(item.status == "publish") {
 						this.listeNote.push(new Note(item));
+					}
+					if(item.status == "archive") {
+						this.listeNoteArchive.push(new Note(item));
 					}
 				}
 				this.loading.dismiss();

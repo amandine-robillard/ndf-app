@@ -14,7 +14,7 @@ export class HomePage {
   // tab2Root: any = Tab2Root;
 
   tab1Title = "Mes notes";
-  // tab2Title = " ";
+  // tab2Title = "Achives";
 
   constructor(public navCtrl: NavController) {
   }

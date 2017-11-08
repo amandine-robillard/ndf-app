@@ -9,53 +9,113 @@
 		</ion-buttons>
 	</ion-navbar>
 
+	<ion-toolbar>
+		<ion-segment [(ngModel)]="homeFilter">
+	    <ion-segment-button value="all">
+	      Toutes
+	    </ion-segment-button>
+	    <ion-segment-button value="archive">
+	      Archivées
+	    </ion-segment-button>
+	  </ion-segment>
+	</ion-toolbar>
+
 </ion-header>
 
-<ion-content class="page-liste-note">
+<ion-content [ngSwitch]="homeFilter" class="page-liste-note">
 
-  <ion-card id="{{note.id}}" *ngFor="let note of listeNote">
+	<div *ngSwitchCase="'all'">
+	  <ion-card id="{{note.id}}" *ngFor="let note of listeNote">
 
-    <ion-item>
-      <h2>{{ note.title }}</h2>
-			<p>
-				<span class="validation-dot {{ note.validation_status | sanitizeString }}"></span>
-				{{ note.validation_status }}
-			</p>
-    </ion-item>
+	    <ion-item>
+	      <h2>{{ note.title }}</h2>
+				<p>
+					<span class="validation-dot {{ note.validation_status | sanitizeString }}"></span>
+					{{ note.validation_status }}
+				</p>
+	    </ion-item>
 
-    <ion-card-content>
+	    <ion-card-content>
+				<ion-row>
+					<ion-col>
+						<p>TVA</p>
+						<p>{{ note.tax_amount }}€</p>
+					</ion-col>
+					<ion-col>
+						<p>TTC</p>
+						<p>{{ note.tax_inclusive_amount }}€</p>
+					</ion-col>
+				</ion-row>
+	    </ion-card-content>
+
+	    <ion-row>
+	      <ion-col>
+					<button ion-button color="primary" clear small icon-start>
+						<ion-icon name="eye"></ion-icon>
+						<span (click)="openNote(note.id)">Voir</span>
+					</button>
+					<button ion-button color="primary" clear small icon-start>
+	          <ion-icon name='archive'></ion-icon>
+	          <span (click)="deleteNote(note)">Archiver</span>
+	        </button>
+	      </ion-col>
+	      <ion-col text-center>
+	        <ion-note>
+	          {{ note.date_modified.date_human_readable }}
+	        </ion-note>
+	      </ion-col>
+	    </ion-row>
+
+	  </ion-card>
+
+		<div class="async-message" *ngIf="listeNote == undefined">
+			{{errorMessage}}
+		</div>
+	</div>
+
+	<div *ngSwitchCase="'archive'">
+		<ion-card id="{{note.id}}" *ngFor="let note of listeNoteArchive">
+
+			<ion-item>
+				<h2>{{ note.title }}</h2>
+				<p>
+					<span class="validation-dot {{ note.validation_status | sanitizeString }}"></span>
+					{{ note.validation_status }}
+				</p>
+			</ion-item>
+
+			<ion-card-content>
+				<ion-row>
+					<ion-col>
+						<p>TVA</p>
+						<p>{{ note.tax_amount }}€</p>
+					</ion-col>
+					<ion-col>
+						<p>TTC</p>
+						<p>{{ note.tax_inclusive_amount }}€</p>
+					</ion-col>
+				</ion-row>
+			</ion-card-content>
+
 			<ion-row>
 				<ion-col>
-					<p>TVA</p>
-					<p>{{ note.tax_amount }}€</p>
+					<button ion-button color="primary" clear small icon-start>
+						<ion-icon name="undo"></ion-icon>
+						<span>Restaurer</span>
+					</button>
 				</ion-col>
-				<ion-col>
-					<p>TTC</p>
-					<p>{{ note.tax_inclusive_amount }}€</p>
+				<ion-col text-center>
+					<ion-note>
+						{{ note.date_modified.date_human_readable }}
+					</ion-note>
 				</ion-col>
 			</ion-row>
-    </ion-card-content>
 
-    <ion-row>
-      <ion-col>
-				<button ion-button color="primary" clear small icon-start>
-					<ion-icon name="eye"></ion-icon>
-					<span (click)="openNote(note.id)">Voir</span>
-				</button>
-				<button ion-button color="primary" clear small icon-start>
-          <ion-icon name='archive'></ion-icon>
-          <span (click)="deleteNote(note)">Archiver</span>
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <ion-note>
-          {{ note.date_modified.date_human_readable }}
-        </ion-note>
-      </ion-col>
-    </ion-row>
+		</ion-card>
 
-  </ion-card>
-	<div class="async-message" *ngIf="listeNote == undefined">
-		{{errorMessage}}
+		<div class="async-message" *ngIf="listeNote == undefined">
+			{{errorMessage}}
+		</div>
 	</div>
+
 </ion-content>

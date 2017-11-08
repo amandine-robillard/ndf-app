@@ -37,7 +37,11 @@ export class Notes {
 		this.notes.push(item);
 	}
 
-	delete(item: Note) {
-		this.notes.splice(this.notes.indexOf(item), 1);
+	delete(itemId: Note) {
+		let param = {
+			'id': itemId,
+			'status': 'archive',
+		}
+		return this.api.post(this.noteUrl, param).map(res => res.json());
 	}
 }

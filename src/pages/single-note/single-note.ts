@@ -62,23 +62,10 @@ export class SingleNotePage {
 			title: 'Options avancées',
 			buttons: [
 				{
-					text: 'Exporter',
-					handler: () => {
-						console.log('Archive clicked');
-					},
-				},
-				{
 					text: 'Archiver',
 					role: 'destructive',
 					handler: () => {
-						console.log('Destructive clicked');
-					}
-				},
-				{
-					text: 'Supprimer',
-					role: 'destructive',
-					handler: () => {
-						console.log('Supprimer clicked');
+						this.deleteNote(this.note);
 					}
 				},
 				{
@@ -109,6 +96,28 @@ export class SingleNotePage {
 			data => {
 				this.loading.dismiss();
 				this.loadNote(this.noteId);
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
+	}
+
+	/* Archive d'une note */
+	deleteNote(note) {
+		if ( ! note || note.length == 0 ) return;
+
+		this.presentLoadingDefault();
+		this.noteApi.delete(note.id).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.navCtrl.push('ListeNotePage');
 			},
 			error => {
 				this.loading.dismiss();

@@ -90,10 +90,26 @@ export class ListeNotePage {
 		);
 	}
 
-	deleteNote(item: Note) {
-		if (item) {
-			this.noteApi.delete( item );
-		}
+	/* Archive d'une note */
+	deleteNote(note) {
+		if ( ! note || note.length == 0 ) return;
+
+		this.presentLoadingDefault();
+		this.noteApi.delete(note.id).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.loadNote();
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
 	}
 
 }

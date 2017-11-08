@@ -79,7 +79,10 @@ export class ListeNotePage {
 			data => {
 				this.listeNote = [];
 				for (let item of data) {
-					this.listeNote.push(new Note(item));
+					/* Affiche seulement les notes non archivées */
+					if(item.status == "publish") {
+						this.listeNote.push(new Note(item));
+					}
 				}
 				this.loading.dismiss();
 			},

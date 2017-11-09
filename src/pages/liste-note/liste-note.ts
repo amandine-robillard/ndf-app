@@ -121,4 +121,25 @@ export class ListeNotePage {
 		);
 	}
 
+	restoreNote(note) {
+		if ( ! note || note.length == 0 ) return;
+
+		this.presentLoadingDefault();
+		this.noteApi.restore(note.id).subscribe(
+			data => {
+				this.loading.dismiss();
+				this.loadNote();
+			},
+			error => {
+				this.loading.dismiss();
+				const alert = this.alertCtrl.create({
+					title: 'Erreur',
+					subTitle: error,
+					buttons: ['Ok']
+				});
+				alert.present();
+			}
+		);
+	}
+
 }

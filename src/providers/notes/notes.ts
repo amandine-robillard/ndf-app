@@ -44,4 +44,12 @@ export class Notes {
 		}
 		return this.api.post(this.noteUrl, param).map(res => res.json());
 	}
+
+	restore(itemId: Note) {
+		let param = {
+			'id': itemId,
+			'status': 'publish',
+		}
+		return this.api.post(this.noteUrl, param).map(res => res.json());
+	}
 }

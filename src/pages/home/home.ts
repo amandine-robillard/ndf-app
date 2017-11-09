@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import { Tab1Root } from '../pages';
-// import { Tab2Root } from '../pages';
+import { Tab2Root } from '../pages';
 
 @IonicPage()
 @Component({
@@ -11,10 +11,10 @@ import { Tab1Root } from '../pages';
 })
 export class HomePage {
 	tab1Root: any = Tab1Root;
-  // tab2Root: any = Tab2Root;
+  tab2Root: any = Tab2Root;
 
   tab1Title = "Mes notes";
-  // tab2Title = "Achives";
+  tab2Title = "Configurations";
 
   constructor(public navCtrl: NavController) {
   }

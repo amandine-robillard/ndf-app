@@ -16,6 +16,7 @@ export class MyApp {
 		{ title: 'Home', component: 'HomePage' },
 		{ title: 'Liste Note', component: 'ListeNotePage' },
 		{ title: 'Note', component: 'SingleNotePage' },
+		{ title: 'Configuration', component: 'Configuration' },
 	];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, config: Config) {

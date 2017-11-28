@@ -13,6 +13,7 @@ import { Notes } from '../providers/notes/notes';
 import { Lignes } from '../providers/lignes/lignes';
 import { Type_Notes } from '../providers/type-note/type-note';
 import { Api } from '../providers/api/api';
+import { Authentification } from '../providers/authentification/authentification';
 import { MyApp } from './app.component';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MyApp } from './app.component';
     Notes,
 		Lignes,
 		Type_Notes,
+		Authentification,
     // Camera,
     // GoogleMaps,
     SplashScreen,

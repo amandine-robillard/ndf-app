@@ -20,6 +20,7 @@ export class ListeNotePage {
 	errorMessage: string = 'En cours de chargement...';
 	loading: any;
 	homeFilter: string = "all";
+	urlIframe: string = "http://localhost/beflex/oauth1/authorize"
 
   constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
   }

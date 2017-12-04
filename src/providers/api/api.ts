@@ -32,8 +32,19 @@ export class Api {
     return this.http.get(this.url + '/' + endpoint, options);
   }
 
-  post(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.post(this.url + '/' + endpoint, body, options);
+  post(endpoint: string, body: any, options?: any) {
+		if ( ! options ) {
+			options  = {
+				headers:  {
+					'Authorization': '',
+				}
+			};
+		}
+		let authData = window.btoa('a:a'); // rajouter le compte du localstorage
+		options.headers['Authorization'] = 'Basic ' + authData;
+
+    // return this.http.post('http://localhost/beflex/wp-json/wp/v2/posts', body, options);
+		return this.http.post(this.url + '/' + endpoint, body, options);
   }
 
   put(endpoint: string, body: any, options?: RequestOptions) {

@@ -13,8 +13,8 @@ var OAuth = require('./../../oauth1.0a.js');
 export class Authentification {
   constructor(private api: Api, public http: Http) {}
 
-	connect(id, password) {
-		if (! id || ! password) {
+	connect(url, id, password) {
+		if (! url || ! id || ! password) {
 			return;
 		}
 		let body;
@@ -27,7 +27,7 @@ export class Authentification {
 		let authData = window.btoa(id + ':' + password); // rajouter le compte du localstorage
 		options.headers['Authorization'] = 'Basic ' + authData;
 
-		return this.http.post('http://localhost/beflex/wp-json/wp/v2/users/me', body, options).map(res => res.json());
+		return this.http.post(url + '/wp-json/wp/v2/users/me', body, options).map(res => res.json());
 	}
 
 }

@@ -13,7 +13,7 @@
 		<p>Pour utiliser l'application, vous devez vous connecter à votre site WordPress</p>
 	</div>
 
-	<form [formGroup]="connectForm">
+	<form [formGroup]="connectForm" (ngSubmit)="logForm()">
 		<ion-list inset>
 
 			<ion-item>
@@ -31,10 +31,7 @@
 				<ion-input type="password" formControlName="password"></ion-input>
 			</ion-item>
 		</ion-list>
+		<button ion-button type="submit" [disabled]="!connectForm.valid">Submit</button>
 	</form>
-
-	<div>
-		<button ion-button (click)="connect()">Se connecter</button>
-	</div>
 
 </ion-content>

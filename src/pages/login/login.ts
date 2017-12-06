@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Authentification } from '../../providers/authentification/authentification';
@@ -11,8 +11,9 @@ import { Authentification } from '../../providers/authentification/authentificat
 })
 export class LoginPage {
 	connectForm: any;
+	loading: any;
 
-	constructor( private authApi: Authentification, public formBuilder: FormBuilder, private storage: Storage, public navCtrl: NavController ) {
+	constructor( public loadingCtrl: LoadingController, public alertCtrl: AlertController, private authApi: Authentification, public formBuilder: FormBuilder, private storage: Storage, public navCtrl: NavController ) {
 		storage.get('id_user').then((val) => {
 			if( val || val != undefined) {
 				this.navCtrl.push('ListeNotePage');
@@ -20,30 +21,48 @@ export class LoginPage {
 		});
 
 		this.connectForm = this.formBuilder.group({
-			url: ['', Validators.required],
-			id: [],
-			password: [],
+			url: ['', Validators.compose([Validators.required, Validators.pattern( '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})' )])],
+			id: ['', Validators.required],
+			password: ['', Validators.required],
 		});
 	}
 
-	connect() {
+	logForm() {
 		this.storage.get('id_user').then((val) => {
 			if( ! val || val == undefined ) {
-				let id = 'a';
-				let password = 'sdsda';
-				this.authApi.connect(id, password).subscribe(
+
+				let id = this.connectForm.value.id;
+				let password = this.connectForm.value.password;
+				let url = this.connectForm.value.url;
+
+				this.presentLoadingDefault();
+				this.authApi.connect(url, id, password).subscribe(
 					data => {
-						console.log(data);
+						this.loading.dismiss();
+						this.storage.set('id_user', '1');
+						this.navCtrl.push('ListeNotePage');
 					},
 					error => {
-						console.log(error);
+						this.loading.dismiss();
+						const alert = this.alertCtrl.create({
+							title: 'Erreur',
+							subTitle: error,
+							buttons: ['Ok']
+						});
+						alert.present();
 					}
 				);
-				// this.storage.set('id_user', '1');
 			}
-			// this.navCtrl.push('ListeNotePage');
 
 		});
+	}
 
+	presentLoadingDefault() {
+		this.loading = this.loadingCtrl.create({
+			spinner: 'crescent',
+			content: 'Please wait...'
+		});
+
+		this.loading.present();
 	}
 }

@@ -1,0 +1,40 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Note de frais</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+<ion-content [ngSwitch]="homeFilter" class="page-liste-note">
+
+	<div padding>
+		<h1>Connexion</h1>
+		<p>Pour utiliser l'application, vous devez vous connecter à votre site WordPress</p>
+	</div>
+
+	<form [formGroup]="connectForm">
+		<ion-list inset>
+
+			<ion-item>
+				<ion-label>URL du site</ion-label>
+				<ion-input type="text" formControlName="url" placeholder="https://mon-url.com"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Username</ion-label>
+				<ion-input type="text" formControlName="id"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Password</ion-label>
+				<ion-input type="password" formControlName="password"></ion-input>
+			</ion-item>
+		</ion-list>
+	</form>
+
+	<div>
+		<button ion-button (click)="connect()">Se connecter</button>
+	</div>
+
+</ion-content>

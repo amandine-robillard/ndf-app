@@ -2,6 +2,7 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { Storage } from '@ionic/storage';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -10,8 +11,16 @@ import { Http, RequestOptions, URLSearchParams } from '@angular/http';
 export class Api {
   url: string = 'http://localhost/beflex/wp-json/note_de_frais/v1';
 
-  constructor(public http: Http) {
+  constructor(private storage: Storage, public http: Http) {
   }
+
+	isConnected() {
+		this.storage.get('id_user').then((val) => {
+			console.log('Your id is', val);
+		});
+
+		// this.navCtrl.push('Connexion');
+	}
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
     if (!options) {
@@ -33,15 +42,15 @@ export class Api {
   }
 
   post(endpoint: string, body: any, options?: any) {
-		if ( ! options ) {
-			options  = {
-				headers:  {
-					'Authorization': '',
-				}
-			};
-		}
-		let authData = window.btoa('a:a'); // rajouter le compte du localstorage
-		options.headers['Authorization'] = 'Basic ' + authData;
+		// if ( ! options ) {
+		// 	options  = {
+		// 		headers:  {
+		// 			'Authorization': '',
+		// 		}
+		// 	};
+		// }
+		// let authData = window.btoa('a:a'); // rajouter le compte du localstorage
+		// options.headers['Authorization'] = 'Basic ' + authData;
 
     // return this.http.post('http://localhost/beflex/wp-json/wp/v2/posts', body, options);
 		return this.http.post(this.url + '/' + endpoint, body, options);

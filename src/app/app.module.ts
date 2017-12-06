@@ -13,7 +13,7 @@ import { Notes } from '../providers/notes/notes';
 import { Lignes } from '../providers/lignes/lignes';
 import { Type_Notes } from '../providers/type-note/type-note';
 import { Api } from '../providers/api/api';
-// import { Authentification } from '../providers/authentification/authentification';
+import { Authentification } from '../providers/authentification/authentification';
 import { MyApp } from './app.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
@@ -38,7 +38,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     Notes,
 		Lignes,
 		Type_Notes,
-		//Authentification,
+		Authentification,
 		InAppBrowser,
     // Camera,
     // GoogleMaps,

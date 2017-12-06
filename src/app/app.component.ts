@@ -19,13 +19,12 @@ export class MyApp {
 		{ title: 'Configuration', component: 'Configuration' },
 	];
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, config: Config) {
-    platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
-
-  }
+	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, config: Config) {
+		platform.ready().then(() => {
+			statusBar.styleDefault();
+			splashScreen.hide();
+		});
+	}
 
 	// ionViewDidLoad() {
 	// 	this.platform.ready().then(() => {

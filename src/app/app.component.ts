@@ -3,6 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Config, Nav } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { FirstRunPage } from '../pages/pages';
 
@@ -12,6 +13,10 @@ import { FirstRunPage } from '../pages/pages';
 export class MyApp {
   rootPage:any = FirstRunPage;
 
+	url: string;
+	name_user: string;
+	pass_user: string;
+
 	pages: any[] = [
 		{ title: 'Home', component: 'HomePage' },
 		{ title: 'Liste Note', component: 'ListeNotePage' },
@@ -19,12 +24,15 @@ export class MyApp {
 		{ title: 'Configuration', component: 'Configuration' },
 	];
 
-	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, config: Config) {
+	constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, config: Config) {
 		platform.ready().then(() => {
 			statusBar.styleDefault();
 			splashScreen.hide();
 		});
+
+
 	}
+
 
 	// ionViewDidLoad() {
 	// 	this.platform.ready().then(() => {

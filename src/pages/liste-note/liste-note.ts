@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Api } from '../../providers/api/api';
 
+import { GlobalAuth } from '../../providers/authentification/authentification-data';
+
 @IonicPage()
 @Component({
   selector: 'page-liste-note',
@@ -22,12 +24,19 @@ export class ListeNotePage {
 	homeFilter: string = "all";
 	urlIframe: string = "http://localhost/beflex/oauth1/authorize"
 
-  constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
-  }
+  constructor(private auth: GlobalAuth, public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
+	}
 
 	/* charge les notes dés que la page devient active */
 	ionViewWillEnter() {
-		this.loadNote();
+		this.api.getAuthData().then((data) => {
+			if(data) {
+				this.loadNote();
+			}
+			else {
+				this.navCtrl.push('LoginPage');
+			}
+		});
 	}
 
 	presentLoadingDefault() {

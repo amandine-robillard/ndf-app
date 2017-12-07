@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { AlertController, LoadingController, IonicPage, NavParams, ViewController, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { SingleNotePage } from '../single-note/single-note';
@@ -12,6 +12,7 @@ import { Type_Notes } from '../../providers/type-note/type-note';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Api } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -26,7 +27,19 @@ export class SingleLignePage {
 
 	editLigne: any;
 
-  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
+		this.api.getAuthData().then((data) => {
+			if(data) {
+				console.log(data);
+				this.initSingleNote();
+			}
+			else {
+				this.navCtrl.push('LoginPage');
+			}
+		});
+	}
+
+	initSingleNote() {
 		this.ligne = this.navParams.get('ligneData');
 		this.getAllTypeNote();
 
@@ -38,7 +51,6 @@ export class SingleLignePage {
 			tax_amount: [this.ligne['tax_amount']],
 			type_note_id: [noteTaxId]
 		});
-
 	}
 
 	presentLoadingDefault() {

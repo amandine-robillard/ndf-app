@@ -25,6 +25,8 @@ export class LoginPage {
 			id: ['', Validators.required],
 			password: ['', Validators.required],
 		});
+
+
 	}
 
 	logForm() {
@@ -39,7 +41,10 @@ export class LoginPage {
 				this.authApi.connect(url, id, password).subscribe(
 					data => {
 						this.loading.dismiss();
-						this.storage.set('id_user', '1');
+						this.storage.set('url_web', url);
+						this.storage.set('id_user', id);
+						this.storage.set('name_user', data.name);
+						this.storage.set('pass_user', password);
 						this.navCtrl.push('ListeNotePage');
 					},
 					error => {

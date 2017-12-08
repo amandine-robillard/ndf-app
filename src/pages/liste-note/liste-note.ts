@@ -124,7 +124,7 @@ export class ListeNotePage {
 		this.noteApi.delete(note.id).subscribe(
 			data => {
 				this.loading.dismiss();
-				this.loadNote();
+				this.navCtrl.push('ListeNotePage');
 			},
 			error => {
 				this.loading.dismiss();

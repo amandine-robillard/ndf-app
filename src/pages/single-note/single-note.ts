@@ -9,6 +9,7 @@ import { Lignes } from '../../providers/lignes/lignes';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Api } from '../../providers/api/api';
 
 
 @IonicPage()
@@ -24,10 +25,17 @@ export class SingleNotePage {
 
 	listeLigne: Observable<any>;
 
-  constructor( public alertCtrl: AlertController, private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligneApi: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
-		this.noteId = this.navParams.get('id');
-		this.loadNote(this.noteId);
-  }
+  constructor( private api: Api, public alertCtrl: AlertController, private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligneApi: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+		this.api.getAuthData().then((data) => {
+			if(data) {
+				this.noteId = this.navParams.get('id');
+				this.loadNote(this.noteId);
+			}
+			else {
+				this.navCtrl.push('LoginPage');
+			}
+		});
+	}
 
 	loadNote(id) {
 		if ( ! id && id != 0 ) {
@@ -37,8 +45,14 @@ export class SingleNotePage {
 			this.presentLoadingDefault();
 			this.noteApi.get(id).subscribe(
 				data => {
-					this.note = new Note(data);
 					this.loading.dismiss();
+					let userId = this.api.getUserId();
+					if(data.author_id == userId) {
+						this.note = new Note(data);
+					}
+					else {
+						this.navCtrl.push('ListeNotePage');
+					}
 				},
 				error => {
 					this.errorMessage = "Erreur lors du chargement, veuillez relancer l'application."
@@ -88,8 +102,10 @@ export class SingleNotePage {
 	addLigne() {
 		this.presentLoadingDefault();
 
+		let authorId = this.api.getUserId();
 		let ligneParams = {
 			'parent_id' : this.noteId,
+			'author_id' : authorId,
 			'title' : 'Ligne de frais'
 		}
 		this.ligneApi.post(ligneParams).subscribe(

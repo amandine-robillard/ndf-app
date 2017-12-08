@@ -16,12 +16,7 @@ export class Api {
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
 		let jsonHeader = this.getHeaderAuth();
-		if (!options) {
-      options = new RequestOptions({headers: jsonHeader});
-    }
-		else {
-			options = new RequestOptions({headers: jsonHeader});
-		}
+		options = new RequestOptions({headers: jsonHeader});
 
     // Support easy query params for GET requests
     if (params) {
@@ -53,11 +48,17 @@ export class Api {
   }
 
   put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.globalAuth['url_web'] + '/' + endpoint, body, options);
+		let jsonHeader = this.getHeaderAuth();
+		options = new RequestOptions({headers: jsonHeader});
+
+		return this.http.put(this.globalAuth['url_web'] + '/' + endpoint, body, options);
   }
 
   delete(endpoint: string, options?: RequestOptions) {
-    return this.http.delete(this.globalAuth['url_web'] + '/' + endpoint, options);
+		let jsonHeader = this.getHeaderAuth();
+		options = new RequestOptions({headers: jsonHeader});
+
+		return this.http.delete(this.globalAuth['url_web'] + '/' + endpoint, options);
   }
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
@@ -77,7 +78,7 @@ export class Api {
 	/* Check si l'utilisateur est connecté. Enregistre ses données de connexion */
 	getAuthData() {
 		const promises = [];
-		let keys = ['name_user', 'pass_user', 'url_web'];
+		let keys = ['name_user', 'pass_user', 'url_web', 'id_user'];
 		keys.forEach( key => promises.push(this.storage.get(key)) );
 
 		return Promise.all(promises).then( values => {
@@ -89,6 +90,7 @@ export class Api {
 
 			if ( result['name_user'] ) {
 				this.globalAuth = {
+					'id_user': result['id_user'],
 					'name_user': result['name_user'],
 					'pass_user': result['pass_user'],
 					'url_web': result['url_web'] + '/wp-json/note_de_frais/v1',
@@ -99,6 +101,15 @@ export class Api {
 				return false;
 			}
 		});
+	}
+
+	getUserId() {
+		if ( this.globalAuth['id_user'] ) {
+			return this.globalAuth['id_user'];
+		}
+		else {
+			return false;
+		}
 	}
 
 

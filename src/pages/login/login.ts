@@ -21,7 +21,8 @@ export class LoginPage {
 		});
 
 		this.connectForm = this.formBuilder.group({
-			url: ['', Validators.compose([Validators.required, Validators.pattern( '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})' )])],
+			// url: ['', Validators.compose([Validators.required, Validators.pattern( '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})' )])],
+			url: ['', Validators.required],
 			id: ['', Validators.required],
 			password: ['', Validators.required],
 		});
@@ -42,7 +43,7 @@ export class LoginPage {
 					data => {
 						this.loading.dismiss();
 						this.storage.set('url_web', url);
-						this.storage.set('id_user', id);
+						this.storage.set('id_user', data.id);
 						this.storage.set('name_user', data.name);
 						this.storage.set('pass_user', password);
 						this.navCtrl.push('ListeNotePage');

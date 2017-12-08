@@ -28,20 +28,8 @@ export class SingleLignePage {
 	editLigne: any;
 
   constructor(public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
-		this.api.getAuthData().then((data) => {
-			if(data) {
-				console.log(data);
-				this.initSingleNote();
-			}
-			else {
-				this.navCtrl.push('LoginPage');
-			}
-		});
-	}
-
-	initSingleNote() {
+		this.presentLoadingDefault();
 		this.ligne = this.navParams.get('ligneData');
-		this.getAllTypeNote();
 
 		let noteTaxId = ( this.ligne['taxonomy']['_type_note'][0] ) ? this.ligne['taxonomy']['_type_note'][0]['term_taxonomy_id'] : '';
 		this.editLigne = this.formBuilder.group({
@@ -50,6 +38,14 @@ export class SingleLignePage {
 			tax_inclusive_amount: [this.ligne['tax_inclusive_amount']],
 			tax_amount: [this.ligne['tax_amount']],
 			type_note_id: [noteTaxId]
+		});
+
+		this.getAllTypeNote();
+
+		this.api.getAuthData().then((data) => {
+			if(! data) {
+				this.navCtrl.push('LoginPage');
+			}
 		});
 	}
 
@@ -69,6 +65,7 @@ export class SingleLignePage {
 				for (let item of data) {
 					this.type_note.push(new Type_Note(item));
 				}
+				this.loading.dismiss();
 			}
 		)
 	}
@@ -81,6 +78,11 @@ export class SingleLignePage {
 		this.presentLoadingDefault();
 
 		let result = Object.assign(this.ligne, form.value); // On envoie les resultats sur l'objet initial
+
+		result.taxonomy._type_note[0] = {
+			term_taxonomy_id: form.value.type_note_id
+		}
+
 		this.ligneApi.post(result).subscribe(
 			data => {
 				this.loading.dismiss();

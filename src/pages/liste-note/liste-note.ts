@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Api } from '../../providers/api/api';
 
-import { GlobalAuth } from '../../providers/authentification/authentification-data';
 
 @IonicPage()
 @Component({
@@ -24,7 +23,7 @@ export class ListeNotePage {
 	homeFilter: string = "all";
 	urlIframe: string = "http://localhost/beflex/oauth1/authorize"
 
-  constructor(private auth: GlobalAuth, public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
+  constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
 	}
 
 	/* charge les notes dés que la page devient active */
@@ -66,7 +65,11 @@ export class ListeNotePage {
 	createNote() {
 		this.presentLoadingDefault();
 
-		this.noteApi.post({'title': 'Nouvelle note'}).subscribe(
+		let postArgs = {
+			'title': 'Nouvelle note',
+			'author_id': this.api.getUserId(),
+		};
+		this.noteApi.post(postArgs).subscribe(
 			data => {
 				this.loading.dismiss();
 				this.openNote(data.id);
@@ -92,12 +95,16 @@ export class ListeNotePage {
 				this.listeNote = [];
 				this.listeNoteArchive = [];
 				for (let item of data) {
-					/* Affiche seulement les notes non archivées */
-					if(item.status == "publish") {
-						this.listeNote.push(new Note(item));
-					}
-					if(item.status == "archive") {
-						this.listeNoteArchive.push(new Note(item));
+					let userId = this.api.getUserId();
+					/* Affiche les notes de l'utilisateur */
+					if(userId == item.author_id) {
+						/* Affiche seulement les notes non archivées */
+						if(item.status == "publish") {
+							this.listeNote.push(new Note(item));
+						}
+						if(item.status == "archive") {
+							this.listeNoteArchive.push(new Note(item));
+						}
 					}
 				}
 				this.loading.dismiss();

@@ -22,6 +22,8 @@ export class Ligne extends Post {
 					this[f] = {};
 					this[f]['_type_note'] = this.setArray(fields[f]['_type_note']);
 				}
+				else if( f == 'satus' ) {
+				}
 				else {
 					this[f] = fields[f];
 				}

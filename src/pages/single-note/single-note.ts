@@ -85,7 +85,6 @@ export class SingleNotePage {
 				{
 					text: 'Annuler',
 					handler: () => {
-						console.log('Archive clicked');
 					},
 				}
 			]
@@ -95,6 +94,9 @@ export class SingleNotePage {
 
 	openLigne(ligneData) {
 		let newModal = this.modalCtrl.create('SingleLignePage', { ligneData: ligneData });
+		newModal.onDidDismiss(data => {
+			this.loadNote(this.noteId);
+		});
 		newModal.present();
 	}
 
@@ -194,7 +196,6 @@ export class SingleNotePage {
 
 	public ligneOptions(ligne) {
 		if ( ! ligne || ligne.length == 0 ) return;
-		console.log(ligne);
 
 		let actionSheet = this.actionSheetCtrl.create({
 			title: ligne.title,

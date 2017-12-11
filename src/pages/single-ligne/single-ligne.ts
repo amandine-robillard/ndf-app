@@ -34,6 +34,7 @@ export class SingleLignePage {
 		let noteTaxId = ( this.ligne['taxonomy']['_type_note'][0] ) ? this.ligne['taxonomy']['_type_note'][0]['term_taxonomy_id'] : '';
 		this.editLigne = this.formBuilder.group({
 			title: [this.ligne['title'], Validators.required],
+			date: [this.ligne['date']['date_input']['iso8601']],
 			distance: [this.ligne['distance']],
 			tax_inclusive_amount: [this.ligne['tax_inclusive_amount']],
 			tax_amount: [this.ligne['tax_amount']],
@@ -83,6 +84,9 @@ export class SingleLignePage {
 			term_taxonomy_id: form.value.type_note_id
 		}
 
+		/* Conversion de la date en Mysql */
+		result.date = this.isoToMysql(result.date);
+
 		this.ligneApi.post(result).subscribe(
 			data => {
 				this.loading.dismiss();
@@ -99,5 +103,14 @@ export class SingleLignePage {
 			}
 		);
 
+	}
+
+	isoToMysql(iso) {
+		if ( iso == undefined ) {
+			return;
+		}
+		iso.replace("T", " ");
+		iso.replace("Z", "");
+		return iso;
 	}
 }

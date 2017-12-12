@@ -10,7 +10,8 @@ export class Ligne extends Post {
 		tax_inclusive_amount: Number,
 		tax_amount: Number,
 		associated_document_id: Array,
-		taxonomy: Array
+		taxonomy: Array,
+		current_category: Array
 	}
 
 	constructor(fields: any) {
@@ -18,11 +19,12 @@ export class Ligne extends Post {
 
 		for (const f in fields) {
 			if(this.interfaceNote[f]) {
-				if ( f == 'taxonomy' ) {
+				if ( f == 'current_category' ) {
+					this['current_category'] = new Type_Note( fields['current_category'] );
+				}
+				else if ( f == 'taxonomy' ) {
 					this[f] = {};
 					this[f]['_type_note'] = this.setArray(fields[f]['_type_note']);
-				}
-				else if( f == 'satus' ) {
 				}
 				else {
 					this[f] = fields[f];
@@ -32,7 +34,11 @@ export class Ligne extends Post {
 
 	}
 
-	setArray(fields: Array<any>) {
+	setArray(fields: any) {
+		if ( ! fields || fields.length == 0 || fields == undefined ) {
+			return;
+		}
+
 		let children = [];
 		for ( let item of fields ) {
 			children.push(new Type_Note(item));

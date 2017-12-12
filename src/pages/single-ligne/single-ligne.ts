@@ -31,7 +31,7 @@ export class SingleLignePage {
 		this.presentLoadingDefault();
 		this.ligne = this.navParams.get('ligneData');
 
-		let noteTaxId = ( this.ligne['taxonomy']['_type_note'][0] ) ? this.ligne['taxonomy']['_type_note'][0]['term_taxonomy_id'] : '';
+		let noteTaxId = ( this.ligne['current_category']['term_taxonomy_id'] ) ? this.ligne['current_category']['term_taxonomy_id'] : '';
 		this.editLigne = this.formBuilder.group({
 			title: [this.ligne['title'], Validators.required],
 			date: [this.ligne['date']['date_input']['iso8601']],
@@ -80,9 +80,7 @@ export class SingleLignePage {
 
 		let result = Object.assign(this.ligne, form.value); // On envoie les resultats sur l'objet initial
 
-		result.taxonomy._type_note[0] = {
-			term_taxonomy_id: form.value.type_note_id
-		}
+		result.taxonomy._type_note[0] = form.value.type_note_id;
 
 		/* Conversion de la date en Mysql */
 		result.date = this.isoToMysql(result.date);

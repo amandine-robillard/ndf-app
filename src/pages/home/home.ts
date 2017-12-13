@@ -20,18 +20,5 @@ export class HomePage {
   tab2Title = "Configurations";
 
   constructor( private storage: Storage, public navCtrl: NavController ) {
-		// storage.get('id_user').then((val) => {
-		// 	console.log('Your id is', val);
-		// });
-
-		// if(! localStorage.getItem('oauth_token')) {
-			// this.authApi.post('http://localhost/beflex/oauth1/request', null);
-		// }
-		// else {
-			// this.authApi.authorizeApp('https://www.google.fr');
-		// }
-
-
-    /* https://github.com/seanfisher/angular-oauth1-client */
   }
 }

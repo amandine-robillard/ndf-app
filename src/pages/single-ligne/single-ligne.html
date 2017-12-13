@@ -27,21 +27,24 @@
 		</ion-item>
 		<ion-item>
 			<ion-label>Type de note</ion-label>
-			<ion-select formControlName="type_note_id">
+			<ion-select formControlName="type_note_id" #select (ngModelChange)="changeType(select.value)">
 				<ion-option *ngFor="let type of type_note" value="{{type.id}}">{{type.name}}</ion-option>
 			</ion-select>
 		</ion-item>
-		<ion-item>
+		<ion-item *ngIf="controlKm">
 			<ion-label>Km</ion-label>
-			<ion-input type="number" disabled formControlName="distance"></ion-input>
+			<ion-input type="number" formControlName="distance"></ion-input>
 		</ion-item>
-		<ion-item>
+		<ion-item *ngIf="controlKm == false">
 			<ion-label>TTC (€)</ion-label>
 			<ion-input type="number" formControlName="tax_inclusive_amount"></ion-input>
 		</ion-item>
-		<ion-item>
+		<ion-item *ngIf="controlKm == false">
 			<ion-label>TVA Récup. (€)</ion-label>
 			<ion-input type="number" formControlName="tax_amount"></ion-input>
+		</ion-item>
+		<ion-item>
+			<button ion-button (click)="uploadPicture()">Photo</button>
 		</ion-item>
 	</form>
 

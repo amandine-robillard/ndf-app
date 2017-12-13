@@ -108,4 +108,8 @@
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
     <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <plugin name="cordova-plugin-camera" spec="~2.4.1" />
+    <plugin name="cordova-plugin-filepath" spec="^1.1.0" />
+    <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <allow-navigation href="http://192.168.0.181:8100" />
 </widget>

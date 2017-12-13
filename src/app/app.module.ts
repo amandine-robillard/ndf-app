@@ -16,6 +16,7 @@ import { Api } from '../providers/api/api';
 import { Authentification } from '../providers/authentification/authentification';
 import { MyApp } from './app.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     // GoogleMaps,
     SplashScreen,
     StatusBar,
+		Camera,
 		NativePageTransitions,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

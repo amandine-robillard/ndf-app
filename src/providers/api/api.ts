@@ -32,17 +32,9 @@ export class Api {
 		return this.http.get(this.globalAuth['url_web'] + '/' + endpoint, options);
   }
 
-  post(endpoint: string, body: any, options?: any) {
-		if ( ! options ) {
-			options  = {
-				headers:  {
-					'Authorization': '',
-				}
-			};
-		}
-
-		let authData = window.btoa(this.globalAuth['name_user'] + ':' + this.globalAuth['pass_user']); // rajouter le compte du localstorage
-		options.headers['Authorization'] = 'Basic ' + authData;
+  post(endpoint: string, body: any, options?: RequestOptions) {
+		let jsonHeader = this.getHeaderAuth();
+		options = new RequestOptions({headers: jsonHeader});
 
 		return this.http.post(this.globalAuth['url_web'] + '/' + endpoint, body, options);
   }

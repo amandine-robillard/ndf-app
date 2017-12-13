@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { RequestOptions, Http, Headers } from '@angular/http';
 import { Api } from '../../providers/api/api';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,5 +29,4 @@ export class Authentification {
 
 		return this.http.post(url + '/wp-json/wp/v2/users/me', body, options).map(res => res.json());
 	}
-
 }

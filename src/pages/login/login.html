@@ -18,17 +18,17 @@
 
 			<ion-item>
 				<ion-label>URL du site</ion-label>
-				<ion-input type="text" formControlName="url" placeholder="https://mon-url.com"></ion-input>
+				<ion-input type="text" value="http://amandinerobillard.com/bwoogames" formControlName="url" placeholder="https://mon-url.com"></ion-input>
 			</ion-item>
 
 			<ion-item>
 				<ion-label>Username</ion-label>
-				<ion-input type="text" formControlName="id"></ion-input>
+				<ion-input type="text" value="bwoogamesadmin" formControlName="id"></ion-input>
 			</ion-item>
 
 			<ion-item>
 				<ion-label>Password</ion-label>
-				<ion-input type="password" formControlName="password"></ion-input>
+				<ion-input type="password" value="AJ#RL34Team" formControlName="password"></ion-input>
 			</ion-item>
 		</ion-list>
 		<button ion-button type="submit" [disabled]="!connectForm.valid">Submit</button>

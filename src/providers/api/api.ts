@@ -29,38 +29,38 @@ export class Api {
       options.search = !options.search && p || options.search;
     }
 
-		return this.http.get(this.globalAuth['url_web'] + '/' + endpoint, options);
+		return this.http.get(this.globalAuth['url_web_ndf'] + '/' + endpoint, options);
   }
 
   post(endpoint: string, body: any, options?: RequestOptions) {
 		let jsonHeader = this.getHeaderAuth();
 		options = new RequestOptions({headers: jsonHeader});
 
-		return this.http.post(this.globalAuth['url_web'] + '/' + endpoint, body, options);
+		return this.http.post(this.globalAuth['url_web_ndf'] + '/' + endpoint, body, options);
   }
 
   put(endpoint: string, body: any, options?: RequestOptions) {
 		let jsonHeader = this.getHeaderAuth();
 		options = new RequestOptions({headers: jsonHeader});
 
-		return this.http.put(this.globalAuth['url_web'] + '/' + endpoint, body, options);
+		return this.http.put(this.globalAuth['url_web_ndf'] + '/' + endpoint, body, options);
   }
 
   delete(endpoint: string, options?: RequestOptions) {
 		let jsonHeader = this.getHeaderAuth();
 		options = new RequestOptions({headers: jsonHeader});
 
-		return this.http.delete(this.globalAuth['url_web'] + '/' + endpoint, options);
+		return this.http.delete(this.globalAuth['url_web_ndf'] + '/' + endpoint, options);
   }
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.globalAuth['url_web'] + '/' + endpoint, body, options);
+    return this.http.put(this.globalAuth['url_web_ndf'] + '/' + endpoint, body, options);
   }
 
 	/* Construit l'authorization pour les requetes */
 	getHeaderAuth() {
 		let authorizationHeader = new Headers();
-		let authData = window.btoa(this.globalAuth['name_user'] + ':' + this.globalAuth['pass_user']);
+		let authData = window.btoa(this.globalAuth['login_user'] + ':' + this.globalAuth['pass_user']);
 		authorizationHeader.append('Content-Type', 'application/json');
 		authorizationHeader.append('Authorization', 'Basic ' + authData);
 
@@ -70,7 +70,7 @@ export class Api {
 	/* Check si l'utilisateur est connecté. Enregistre ses données de connexion */
 	getAuthData() {
 		const promises = [];
-		let keys = ['name_user', 'pass_user', 'url_web', 'id_user'];
+		let keys = ['login_user', 'name_user', 'pass_user', 'url_web', 'id_user'];
 		keys.forEach( key => promises.push(this.storage.get(key)) );
 
 		return Promise.all(promises).then( values => {
@@ -80,12 +80,14 @@ export class Api {
 				result[keys[index]] = value;
 			});
 
-			if ( result['name_user'] ) {
+			if ( result['login_user'] ) {
 				this.globalAuth = {
+					'login_user': result['login_user'],
 					'id_user': result['id_user'],
 					'name_user': result['name_user'],
 					'pass_user': result['pass_user'],
-					'url_web': result['url_web'] + '/wp-json/note_de_frais/v1',
+					'url_web': result['url_web'],
+					'url_web_ndf': result['url_web'] + '/wp-json/note_de_frais/v1',
 				}
 				return true;
 			}

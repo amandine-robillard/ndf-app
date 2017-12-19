@@ -13,10 +13,12 @@ import { Notes } from '../providers/notes/notes';
 import { Lignes } from '../providers/lignes/lignes';
 import { Type_Notes } from '../providers/type-note/type-note';
 import { Api } from '../providers/api/api';
+import { Media } from '../providers/media/media';
 import { Authentification } from '../providers/authentification/authentification';
 import { MyApp } from './app.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Camera } from '@ionic-native/camera';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { Camera } from '@ionic-native/camera';
     SplashScreen,
     StatusBar,
 		Camera,
+		FileTransfer,
+		Media,
 		NativePageTransitions,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

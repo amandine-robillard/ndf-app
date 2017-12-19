@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, IonicPage, NavParams, ViewController, NavController } from 'ionic-angular';
+import { Platform, AlertController, LoadingController, IonicPage, NavParams, ViewController, NavController, ActionSheetController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { SingleNotePage } from '../single-note/single-note';
@@ -10,14 +10,15 @@ import { Lignes } from '../../providers/lignes/lignes';
 import { Type_Note } from '../../models/type-note';
 import { Type_Notes } from '../../providers/type-note/type-note';
 
+import { Media } from '../../providers/media/media';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Api } from '../../providers/api/api';
 
-import { File } from '@ionic-native/file';
-// import { FilePath } from '@ionic-native/file-path';
-// import { Transfer } from '@ionic-native/transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+
+declare var cordova: any;
 
 @IonicPage()
 @Component({
@@ -31,17 +32,11 @@ export class SingleLignePage {
 	loading: any;
 	controlKm: boolean = false;
 	noteTaxId: number;
+	lastImage: any;
 
 	editLigne: any;
 
-	options: CameraOptions = {
-		quality: 100,
-		destinationType: this.camera.DestinationType.DATA_URL,
-		encodingType: this.camera.EncodingType.JPEG,
-		mediaType: this.camera.MediaType.PICTURE
-	}
-
-  constructor(private camera: Camera, public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(private media: Media, private platform: Platform, public actionsheet: ActionSheetController, private camera: Camera, public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
 		this.presentLoadingDefault();
 		this.ligne = this.navParams.get('ligneData');
 
@@ -150,13 +145,49 @@ export class SingleLignePage {
 		}
 	}
 
-	uploadPicture() {
-		this.camera.getPicture(this.options).then((imageData) => {
-			// imageData is either a base64 encoded string or a file URI
-			// If it's base64:
+	pictureAction() {
+		let actionSheet = this.actionsheet.create({
+			title: 'Select Image Source',
+			buttons: [
+				{
+					text: 'Prendre une photo',
+					handler: () => {
+						this.openCamera();
+						// this.takePicture(this.camera.PictureSourceType.CAMERA);
+					}
+				},
+				{
+					text: 'Depuis librairie',
+					handler: () => {
+						this.openCamera();
+						// this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+					}
+				},
+				{
+					text: 'Cancel',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
+	}
+
+	openCamera() {
+		this.camera.getPicture({ quality: 40, destinationType: 0, encodingType: 0 }).then((imageData) => {
+
 			let base64Image = 'data:image/jpeg;base64,' + imageData;
-		}, (err) => {
-			// Handle error
+			var currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			var correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+
+			this.media.post( base64Image, this.ligne['id'], currentName ).then(
+				(data) => {
+					let response = JSON.parse(data.response);
+					console.log(response);
+
+					/* renvoyer une requete pour mettre this.ligne.thumbnail_id le response id */
+				}
+			)
+
 		});
 	}
 

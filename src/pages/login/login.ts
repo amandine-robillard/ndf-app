@@ -14,11 +14,13 @@ export class LoginPage {
 	loading: any;
 
 	constructor( public loadingCtrl: LoadingController, public alertCtrl: AlertController, private authApi: Authentification, public formBuilder: FormBuilder, private storage: Storage, public navCtrl: NavController ) {
-		storage.get('id_user').then((val) => {
+		this.storage.get('id_user').then((val) => {
 			if( val || val != undefined) {
 				this.navCtrl.push('ListeNotePage');
 			}
 		});
+
+		this.storage.clear();
 
 		this.connectForm = this.formBuilder.group({
 			// url: ['', Validators.compose([Validators.required, Validators.pattern( '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})' )])],
@@ -44,6 +46,7 @@ export class LoginPage {
 						this.loading.dismiss();
 						this.storage.set('url_web', url);
 						this.storage.set('id_user', data.id);
+						this.storage.set('login_user', data.username);
 						this.storage.set('name_user', data.name);
 						this.storage.set('pass_user', password);
 						this.navCtrl.push('ListeNotePage');
@@ -58,6 +61,8 @@ export class LoginPage {
 						alert.present();
 					}
 				);
+			} else {
+				this.navCtrl.push( 'ListeNotePage' );
 			}
 
 		});

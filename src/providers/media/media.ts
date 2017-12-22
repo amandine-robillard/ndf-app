@@ -23,6 +23,7 @@ export class Media {
 		}
 
 		let t = this.transfer.create();
+		console.log(t);
 		return t.upload(fileEncoded, 'http://amandinerobillard.com/bwoogames/wp-json/wp/v2/media/', options);
 	}
 

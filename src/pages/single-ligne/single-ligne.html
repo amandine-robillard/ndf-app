@@ -43,10 +43,8 @@
 			<ion-label>TVA Récup. (€)</ion-label>
 			<ion-input type="number" formControlName="tax_amount"></ion-input>
 		</ion-item>
-		<ion-item>
-			 <img src="{{lastImage}}" style="width: 100%" [hidden]="lastImage === null">
-			<button ion-button (click)="pictureAction()">Photo</button>
-		</ion-item>
+		<img src="{{lastImage}}" style="width: 100%" [hidden]="lastImage === null">
+		<button ion-button (click)="pictureAction()">Associer une photo</button>
 	</form>
 
 </ion-content>

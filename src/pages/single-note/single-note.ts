@@ -93,6 +93,8 @@ export class SingleNotePage {
 	}
 
 	openLigne(ligneData) {
+		event.stopPropagation();
+
 		let newModal = this.modalCtrl.create('SingleLignePage', { ligneData: ligneData });
 		newModal.onDidDismiss(data => {
 			this.loadNote(this.noteId);
@@ -195,6 +197,7 @@ export class SingleNotePage {
 	}
 
 	public ligneOptions(ligne) {
+		event.stopPropagation();
 		if ( ! ligne || ligne.length == 0 ) return;
 
 		let actionSheet = this.actionSheetCtrl.create({

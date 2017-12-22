@@ -29,7 +29,7 @@
 	<button ion-button float right (click)="addLigne()"> <ion-icon name="add"></ion-icon> Ajouter une ligne</button>
 
 	<ion-list>
-		<ion-item *ngFor="let ligne of note?.children">
+		<ion-item (click)="openLigne(ligne)" *ngFor="let ligne of note?.children">
 			<ion-thumbnail item-start>
 				<!-- <img src="img/thumbnail-totoro.png"> -->
 			</ion-thumbnail>

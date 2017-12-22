@@ -32,8 +32,13 @@ export class SingleLignePage {
 	loading: any;
 	controlKm: boolean = false;
 	noteTaxId: number;
-	lastImage: any;
-
+	imageUrl: any;
+	cameraOptions = {
+		quality: 40,
+		destinationType: 0,
+		encodingType: 0,
+		sourceType: 1
+	}
 	editLigne: any;
 
   constructor(private media: Media, private platform: Platform, public actionsheet: ActionSheetController, private camera: Camera, public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
@@ -159,13 +164,14 @@ export class SingleLignePage {
 				{
 					text: 'Depuis librairie',
 					handler: () => {
+						this.cameraOptions.sourceType = 0;
 						this.openCamera();
 						// this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
 					}
 				},
 				{
 					text: 'Cancel',
-					role: 'cancel'
+					role: 'cancel',
 				}
 			]
 		});
@@ -173,22 +179,31 @@ export class SingleLignePage {
 	}
 
 	openCamera() {
-		this.camera.getPicture({ quality: 40, destinationType: 0, encodingType: 0 }).then((imageData) => {
+		this.camera.getPicture(this.cameraOptions).then(
+			(imageData) => {
+				if ( ! imageData ) return;
+				this.presentLoadingDefault();
+				let base64Image = 'data:image/jpeg;base64,' + imageData;
+				let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
+				this.imageUrl = base64Image;
 
-			let base64Image = 'data:image/jpeg;base64,' + imageData;
-			var currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
-			var correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+				this.media.post(base64Image, this.ligne['id'], currentName).then(
+					(data) => {
+						let response = JSON.parse(data.response);
+						console.log(response);
+						// this.ligne.thumbnail_id = response.thumbnail_id;
+						this.loading.dismiss();
+					},
+					(err) => {
+						this.loading.dismiss();
+						console.log(err);
+					}
+				);
+			},
+			(err) => {
 
-			this.media.post( base64Image, this.ligne['id'], currentName ).then(
-				(data) => {
-					let response = JSON.parse(data.response);
-					console.log(response);
-
-					/* renvoyer une requete pour mettre this.ligne.thumbnail_id le response id */
-				}
-			)
-
-		});
+			}
+		);
 	}
 
 }

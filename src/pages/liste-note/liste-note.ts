@@ -49,6 +49,8 @@ export class ListeNotePage {
 
 	/* Open a cart */
 	openNote(noteId) {
+		event.stopPropagation();
+
 		let options: NativeTransitionOptions = {
 			direction: 'left',
 			duration: 400,
@@ -118,6 +120,8 @@ export class ListeNotePage {
 
 	/* Archive d'une note */
 	deleteNote(note) {
+		event.stopPropagation();
+
 		if ( ! note || note.length == 0 ) return;
 
 		this.presentLoadingDefault();

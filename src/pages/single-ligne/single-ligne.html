@@ -15,6 +15,7 @@
 </ion-header>
 
 <ion-content>
+	{{response | json}}
 
 	<form [formGroup]="editLigne">
 		<ion-item>
@@ -43,7 +44,7 @@
 			<ion-label>TVA Récup. (€)</ion-label>
 			<ion-input type="number" formControlName="tax_amount"></ion-input>
 		</ion-item>
-		<img src="{{lastImage}}" style="width: 100%" [hidden]="lastImage === null">
+		<img src="{{imageUrl}}" style="width: 100%" [hidden]="imageUrl === null">
 		<button ion-button (click)="pictureAction()">Associer une photo</button>
 	</form>
 

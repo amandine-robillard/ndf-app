@@ -1,6 +1,6 @@
 <ion-header>
 
-	<ion-navbar>
+	<ion-navbar hideBackButton="true">
 		<ion-title>Mes notes</ion-title>
 		<ion-buttons end (click)="createNote()">
 			<button ion-button>
@@ -50,10 +50,6 @@
 
 	    <ion-row>
 	      <ion-col>
-					<button ion-button color="primary" clear small icon-start>
-						<ion-icon name="eye"></ion-icon>
-						<span (click)="openNote(note.id)">Voir</span>
-					</button>
 					<button ion-button color="primary" clear small icon-start>
 	          <ion-icon name='archive'></ion-icon>
 	          <span (click)="deleteNote(note)">Archiver</span>

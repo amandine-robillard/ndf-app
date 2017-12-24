@@ -40,6 +40,7 @@ export class SingleLignePage {
 		sourceType: 1
 	}
 	editLigne: any;
+	response: any;
 
   constructor(private media: Media, private platform: Platform, public actionsheet: ActionSheetController, private camera: Camera, public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
 		this.presentLoadingDefault();
@@ -58,11 +59,15 @@ export class SingleLignePage {
 
 		this.getAllTypeNote();
 
+		this.getMediaAttachment(this.ligne['thumbnail_id']);
+
 		this.api.getAuthData().then((data) => {
 			if(! data) {
 				this.navCtrl.push('LoginPage');
 			}
 		});
+
+		console.log(this.ligne);
 	}
 
 	presentLoadingDefault() {
@@ -87,6 +92,15 @@ export class SingleLignePage {
 		)
 	}
 
+	getMediaAttachment(media_id) {
+		this.media.get(media_id).subscribe(
+			(data) => {
+				this.imageUrl = data.source_url;
+			},
+			(err) => {}
+		);
+	}
+
 	cancelEdit() {
 		this.viewCtrl.dismiss();
 	}
@@ -101,6 +115,8 @@ export class SingleLignePage {
 
 		/* Conversion de la date en Mysql */
 		result.date = this.isoToMysql(result.date);
+
+		this.response = result;
 
 		this.ligneApi.post(result).subscribe(
 			data => {
@@ -190,13 +206,11 @@ export class SingleLignePage {
 				this.media.post(base64Image, this.ligne['id'], currentName).then(
 					(data) => {
 						let response = JSON.parse(data.response);
-						console.log(response);
-						// this.ligne.thumbnail_id = response.thumbnail_id;
+						this.ligne['thumbnail_id'] = response.id;
 						this.loading.dismiss();
 					},
 					(err) => {
 						this.loading.dismiss();
-						console.log(err);
 					}
 				);
 			},

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Note } from '../../models/note';
-import { Api } from '../../providers/api/api';
+import { ApiProvider } from '../../providers/api/api';
 
 @Injectable()
-export class Notes {
+export class NotesProvider {
 	notes: Note[] = [];
 	noteUrl: string = 'note';
 
@@ -15,8 +14,7 @@ export class Notes {
 		"title": 'Nouvelle note'
 	};
 
-	constructor(public http: Http, public api: Api) {
-	}
+	constructor(public api: ApiProvider) {}
 
 	get(param?: number) {
 		let queryUrl = this.noteUrl;

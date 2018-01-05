@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, LoadingController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, AlertController  } from 'ionic-angular';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
 import { Note } from '../../models/note';
-import { Notes } from '../../providers/notes/notes';
+import { NotesProvider } from '../../providers/notes/notes';
 
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Api } from '../../providers/api/api';
-
+import { ApiProvider } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -23,8 +21,14 @@ export class ListeNotePage {
 	homeFilter: string = "all";
 	urlIframe: string = "http://localhost/beflex/oauth1/authorize"
 
-  constructor(public alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions, public loadingCtrl: LoadingController, public navCtrl: NavController, public noteApi: Notes, public api: Api) {
-	}
+	constructor(
+		public alertCtrl: AlertController,
+		private nativePageTransitions: NativePageTransitions,
+		public loadingCtrl: LoadingController,
+		public navCtrl: NavController,
+		public noteApi: NotesProvider,
+		public api: ApiProvider
+	) {}
 
 	/* charge les notes dés que la page devient active */
 	ionViewWillEnter() {
@@ -38,6 +42,7 @@ export class ListeNotePage {
 		});
 	}
 
+	/* Prepare alert message */
 	presentLoadingDefault() {
 		this.loading = this.loadingCtrl.create({
 			spinner: 'crescent',
@@ -47,7 +52,7 @@ export class ListeNotePage {
 		this.loading.present();
 	}
 
-	/* Open a cart */
+	/* Open a note */
 	openNote(noteId) {
 		event.stopPropagation();
 

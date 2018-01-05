@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-	name: 'sanitizeString'
+  name: 'sanitizeString',
 })
-export class SanitizeString implements PipeTransform {
+export class SanitizePipe implements PipeTransform {
 	transform(value, args) {
 		let newValue = value.replace(/ /g, '-');
 		newValue = newValue.toLowerCase();

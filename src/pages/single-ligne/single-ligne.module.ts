@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-
 import { SingleLignePage } from './single-ligne';
 
 @NgModule({
@@ -10,8 +9,5 @@ import { SingleLignePage } from './single-ligne';
   imports: [
     IonicPageModule.forChild(SingleLignePage),
   ],
-  exports: [
-    SingleLignePage
-  ]
 })
-export class SingleLignePageModule { }
+export class SingleLignePageModule {}

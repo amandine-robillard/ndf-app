@@ -1,58 +1,50 @@
-import { ErrorHandler, NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-// import { Camera } from '@ionic-native/camera';
-// import { GoogleMaps } from '@ionic-native/google-maps';
+import { HttpModule } from '@angular/http';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { IonicStorageModule, Storage } from '@ionic/storage';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
-import { Notes } from '../providers/notes/notes';
-import { Lignes } from '../providers/lignes/lignes';
-import { Type_Notes } from '../providers/type-note/type-note';
-import { Api } from '../providers/api/api';
-import { Media } from '../providers/media/media';
-import { Authentification } from '../providers/authentification/authentification';
 import { MyApp } from './app.component';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AuthentificationProvider } from '../providers/authentification/authentification';
+import { ApiProvider } from '../providers/api/api';
+import { LignesProvider } from '../providers/lignes/lignes';
+import { MediaProvider } from '../providers/media/media';
+import { NotesProvider } from '../providers/notes/notes';
+import { TypeNoteProvider } from '../providers/type-note/type-note';
+
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
     MyApp,
-	],
+  ],
   imports: [
     BrowserModule,
-    HttpModule,
+		HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
+		IonicStorageModule.forRoot()
   ],
-	exports: [
-	],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-	],
+  ],
   providers: [
-    Api,
-    Notes,
-		Lignes,
-		Type_Notes,
-		Authentification,
-		InAppBrowser,
-    // Camera,
-    // GoogleMaps,
-    SplashScreen,
     StatusBar,
-		Camera,
-		FileTransfer,
-		Media,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthentificationProvider,
+    ApiProvider,
+    LignesProvider,
+    MediaProvider,
+    NotesProvider,
+    TypeNoteProvider,
 		NativePageTransitions,
-    // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+		Camera,
+		FileTransfer
   ]
 })
-export class AppModule { }
+export class AppModule {}

@@ -2,14 +2,17 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Api } from '../../providers/api/api';
-import { Observable } from 'rxjs/Observable';
+import { ApiProvider } from '../../providers/api/api';
 
 import { FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer';
 
 @Injectable()
-export class Media {
-  constructor(private http: Http, private transfer: FileTransfer, private api: Api) {}
+export class MediaProvider {
+  constructor(
+		private http: Http,
+		private transfer: FileTransfer,
+		private api: ApiProvider
+	) {}
 
 	post(fileEncoded: any, ligneId: any, currentName: string): any {
 		let authData = window.btoa(this.api.globalAuth['login_user'] + ':' + this.api.globalAuth['pass_user']);
@@ -19,12 +22,12 @@ export class Media {
 		let options: FileUploadOptions = {
 			 fileKey: 'file',
 			 fileName: 'capture-telephone.jpg',
+			 mimeType: "image/jpeg",
 			 headers: authorizationHeader
 		}
 
 		let t = this.transfer.create();
-		console.log(t);
-		return t.upload(fileEncoded, 'http://amandinerobillard.com/bwoogames/wp-json/wp/v2/media/', options);
+		return t.upload(fileEncoded, this.api.globalAuth['url_web'] + '/wp-json/wp/v2/media/', options);
 	}
 
 	get(id) {
@@ -33,7 +36,7 @@ export class Media {
 		let jsonHeader = this.getHeaderAuth();
 		let options = new RequestOptions({headers: jsonHeader});
 
-		return this.http.get('http://amandinerobillard.com/bwoogames/wp-json/wp/v2/media/' + id, options).map(res => res.json());
+		return this.http.get(this.api.globalAuth['url_web'] + '/wp-json/wp/v2/media/' + id, options).map(res => res.json());
 	}
 
 	getHeaderAuth() {

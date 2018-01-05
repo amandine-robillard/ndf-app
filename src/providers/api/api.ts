@@ -8,11 +8,12 @@ import { Storage } from '@ionic/storage';
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
-export class Api {
+export class ApiProvider {
 	globalAuth = {}
 
-  constructor(private storage: Storage, public http: Http) {
-  }
+  constructor(
+		private storage: Storage,
+		public http: Http) {}
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
 		let jsonHeader = this.getHeaderAuth();

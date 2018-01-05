@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController  } from 'ionic-angular';
 
-
-import { Authentification } from '../../providers/authentification/authentification';
-import { Api } from '../../providers/api/api';
+import { ApiProvider } from '../../providers/api/api';
 import { Storage } from '@ionic/storage';
 
 @IonicPage()
@@ -16,8 +14,12 @@ export class ConfigurationPage {
 	userName: string;
 	loading: any;
 
-	constructor(private storage: Storage, private api: Api, private authApi: Authentification, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public navCtrl: NavController) {
-	}
+	constructor(
+		private storage: Storage,
+		private api: ApiProvider,
+		public loadingCtrl: LoadingController,
+		public navCtrl: NavController
+	) {}
 
 	ionViewWillEnter() {
 		this.presentLoadingDefault();
@@ -27,6 +29,7 @@ export class ConfigurationPage {
 				this.getUserName();
 			}
 			else {
+				this.loading.dismiss();
 				this.navCtrl.push('LoginPage');
 			}
 		});

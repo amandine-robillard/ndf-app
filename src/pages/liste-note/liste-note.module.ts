@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-
-import { PipesModule } from '../../pipe/pipe.module';
-
 import { ListeNotePage } from './liste-note';
+
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -12,9 +11,6 @@ import { ListeNotePage } from './liste-note';
   imports: [
     IonicPageModule.forChild(ListeNotePage),
 		PipesModule
-  ],
-  exports: [
-    ListeNotePage
   ]
 })
-export class ListeNotePageModule { }
+export class ListeNotePageModule {}

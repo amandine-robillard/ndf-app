@@ -1,24 +1,18 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-
-import { Tab1Root } from '../pages';
-import { Tab2Root } from '../pages';
-
-// import { Authentification } from '../../providers/authentification/authentification';
+import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
+
 export class HomePage {
-	tab1Root: any = Tab1Root;
-  tab2Root: any = Tab2Root;
+	tab1Root: any = 'ListeNotePage';
+	tab2Root: any = 'ConfigurationPage';
 
-  tab1Title = "Mes notes";
-  tab2Title = "Configurations";
+	tab1Title = "Mes notes";
+	tab2Title = "Configurations";
 
-  constructor( private storage: Storage, public navCtrl: NavController ) {
-  }
+	constructor() {}
 }

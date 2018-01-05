@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-
-
 import { ConfigurationPage } from './configuration';
 
 @NgModule({
@@ -11,8 +9,5 @@ import { ConfigurationPage } from './configuration';
   imports: [
     IonicPageModule.forChild(ConfigurationPage),
   ],
-  exports: [
-    ConfigurationPage
-  ]
 })
-export class ConfigurationPageModule { }
+export class ConfigurationPageModule {}

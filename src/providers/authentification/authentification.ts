@@ -1,17 +1,12 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { RequestOptions, Http, Headers } from '@angular/http';
-import { Api } from '../../providers/api/api';
-import { Observable } from 'rxjs/Observable';
-
-declare var require: any;
-const crypto = require('crypto');
-var OAuth = require('./../../oauth1.0a.js');
+import { Http } from '@angular/http';
 
 @Injectable()
-export class Authentification {
-  constructor(private api: Api, public http: Http) {}
+export class AuthentificationProvider {
+
+  constructor(public http: Http) {}
 
 	connect(url, id, password) {
 		if (! url || ! id || ! password) {

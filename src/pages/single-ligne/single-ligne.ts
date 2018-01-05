@@ -1,24 +1,20 @@
 import { Component } from '@angular/core';
-import { Platform, AlertController, LoadingController, IonicPage, NavParams, ViewController, NavController, ActionSheetController } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-
-import { SingleNotePage } from '../single-note/single-note';
+import { AlertController, LoadingController, IonicPage, NavParams, ViewController, NavController, ActionSheetController } from 'ionic-angular';
+import { Validators, FormBuilder } from '@angular/forms';
 
 import { Ligne } from '../../models/ligne';
-import { Lignes } from '../../providers/lignes/lignes';
+import { LignesProvider } from '../../providers/lignes/lignes';
 
 import { Type_Note } from '../../models/type-note';
-import { Type_Notes } from '../../providers/type-note/type-note';
+import { TypeNoteProvider } from '../../providers/type-note/type-note';
 
-import { Media } from '../../providers/media/media';
+import { MediaProvider } from '../../providers/media/media';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import { Api } from '../../providers/api/api';
+import { ApiProvider } from '../../providers/api/api';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-declare var cordova: any;
+// declare var cordova: any;
 
 @IonicPage()
 @Component({
@@ -33,7 +29,7 @@ export class SingleLignePage {
 	controlKm: boolean = false;
 	noteTaxId: number;
 	imageUrl: any;
-	cameraOptions = {
+	cameraOptions: CameraOptions = {
 		quality: 40,
 		destinationType: 0,
 		encodingType: 0,
@@ -42,7 +38,22 @@ export class SingleLignePage {
 	editLigne: any;
 	response: any;
 
-  constructor(private media: Media, private platform: Platform, public actionsheet: ActionSheetController, private camera: Camera, public navCtrl: NavController, private api: Api, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public type_noteApi: Type_Notes, public formBuilder: FormBuilder, public ligneApi: Lignes, public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(
+		private media: MediaProvider,
+		public actionsheet: ActionSheetController,
+		private camera: Camera,
+		public navCtrl: NavController,
+		private api: ApiProvider,
+		public alertCtrl: AlertController,
+		public loadingCtrl: LoadingController,
+		public type_noteApi: TypeNoteProvider,
+		public formBuilder: FormBuilder,
+		public ligneApi: LignesProvider,
+		public viewCtrl: ViewController,
+		public navParams: NavParams
+	) {}
+
+	ngOnInit() {
 		this.presentLoadingDefault();
 		this.ligne = this.navParams.get('ligneData');
 
@@ -205,11 +216,13 @@ export class SingleLignePage {
 
 				this.media.post(base64Image, this.ligne['id'], currentName).then(
 					(data) => {
+						this.response = data;
 						let response = JSON.parse(data.response);
 						this.ligne['thumbnail_id'] = response.id;
 						this.loading.dismiss();
 					},
 					(err) => {
+						this.response = err;
 						this.loading.dismiss();
 					}
 				);

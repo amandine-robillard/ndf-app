@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { AlertController, ModalController, IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import { Note } from '../../models/note';
-import { Notes } from '../../providers/notes/notes';
+import { NotesProvider } from '../../providers/notes/notes';
 
-import { Ligne } from '../../models/ligne';
-import { Lignes } from '../../providers/lignes/lignes';
+import { LignesProvider } from '../../providers/lignes/lignes';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import { Api } from '../../providers/api/api';
+import { ApiProvider } from '../../providers/api/api';
+
+import { MediaProvider } from '../../providers/media/media';
 
 
 @IonicPage()
@@ -25,7 +25,20 @@ export class SingleNotePage {
 
 	listeLigne: Observable<any>;
 
-  constructor( private api: Api, public alertCtrl: AlertController, private modalCtrl: ModalController, public loadingCtrl: LoadingController, public navCtrl: NavController, public ligneApi: Lignes, public noteApi: Notes, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor(
+		private api: ApiProvider,
+		public alertCtrl: AlertController,
+		private modalCtrl: ModalController,
+		public loadingCtrl: LoadingController,
+		public navCtrl: NavController,
+		public ligneApi: LignesProvider,
+		public noteApi: NotesProvider,
+		public navParams: NavParams,
+		public actionSheetCtrl: ActionSheetController,
+		private mediaCtrl: MediaProvider
+	) {}
+
+	ngOnInit() {
 		this.api.getAuthData().then((data) => {
 			if(data) {
 				this.noteId = this.navParams.get('id');
@@ -49,6 +62,7 @@ export class SingleNotePage {
 					let userId = this.api.getUserId();
 					if(data.author_id == userId) {
 						this.note = new Note(data);
+						this.get_thumbnails();
 					}
 					else {
 						this.navCtrl.push('ListeNotePage');
@@ -217,5 +231,18 @@ export class SingleNotePage {
 			]
 		});
 		actionSheet.present();
+	}
+
+	/* get thumbnail of each line */
+	get_thumbnails() {
+		let lignes = this.note['children'];
+		for (let i in lignes) {
+			this.mediaCtrl.get(lignes[i]['thumbnail_id']).subscribe(
+				(data) => {
+					this.note['children'][i]['thumbnail_url'] = data.source_url;
+				},
+				(err) => {}
+			);
+		}
 	}
 }
